@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="WesleyDude.com - A website built by Wesley to do cool stuff">
+    <title>WesleyDude.com - Cool Stuff by Wesley</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header class="header">
+        <nav class="nav">
+            <div class="nav-brand">
+                <h1>WesleyDude.com</h1>
+            </div>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#projects">Projects</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+            <button class="nav-toggle" aria-label="Toggle navigation">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </nav>
+    </header>
+
+    <main>
+        <section id="home" class="hero">
+            <div class="hero-content">
+                <h2 class="hero-title">Welcome to WesleyDude.com</h2>
+                <p class="hero-subtitle">A website built by Wesley to do cool stuff</p>
+                <div class="hero-buttons">
+                    <button class="btn btn-primary" id="exploreBtn">Explore Cool Stuff</button>
+                    <button class="btn btn-secondary" id="learnMoreBtn">Learn More</button>
+                </div>
+            </div>
+            <div class="hero-visual">
+                <div class="floating-card" id="card1">
+                    <span>🚀</span>
+                </div>
+                <div class="floating-card" id="card2">
+                    <span>💡</span>
+                </div>
+                <div class="floating-card" id="card3">
+                    <span>⚡</span>
+                </div>
+            </div>
+        </section>
+
+        <section id="about" class="about">
+            <div class="container">
+                <h2>About Wesley</h2>
+                <div class="about-content">
+                    <div class="about-text">
+                        <p>Hey there! I'm Wesley, and this is my corner of the internet where I build cool stuff and share my projects with the world.</p>
+                        <p>Whether it's web development, creative coding, or just experimenting with new technologies, you'll find it all here.</p>
+                    </div>
+                    <div class="about-stats">
+                        <div class="stat">
+                            <span class="stat-number" id="projectsCount">0</span>
+                            <span class="stat-label">Projects</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-number" id="linesOfCode">0</span>
+                            <span class="stat-label">Lines of Code</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-number" id="coffeeCups">0</span>
+                            <span class="stat-label">Cups of Coffee</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="projects" class="projects">
+            <div class="container">
+                <h2>Cool Projects</h2>
+                <div class="projects-grid">
+                    <div class="project-card">
+                        <div class="project-icon">🎨</div>
+                        <h3>Creative Coding</h3>
+                        <p>Interactive art and visual experiments using code</p>
+                        <button class="btn btn-outline">View Project</button>
+                    </div>
+                    <div class="project-card">
+                        <div class="project-icon">🌐</div>
+                        <h3>Web Applications</h3>
+                        <p>Modern web apps built with cutting-edge technologies</p>
+                        <button class="btn btn-outline">View Project</button>
+                    </div>
+                    <div class="project-card">
+                        <div class="project-icon">🤖</div>
+                        <h3>AI Experiments</h3>
+                        <p>Exploring artificial intelligence and machine learning</p>
+                        <button class="btn btn-outline">View Project</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="contact" class="contact">
+            <div class="container">
+                <h2>Get In Touch</h2>
+                <div class="contact-content">
+                    <div class="contact-info">
+                        <p>Want to collaborate or just say hi? I'd love to hear from you!</p>
+                        <div class="contact-methods">
+                            <a href="mailto:wesley@wesleydude.com" class="contact-link">
+                                <span class="contact-icon">📧</span>
+                                wesley@wesleydude.com
+                            </a>
+                            <a href="https://github.com/wesley" class="contact-link">
+                                <span class="contact-icon">🐙</span>
+                                GitHub
+                            </a>
+                            <a href="https://twitter.com/wesley" class="contact-link">
+                                <span class="contact-icon">🐦</span>
+                                Twitter
+                            </a>
+                        </div>
+                    </div>
+                    <form class="contact-form" id="contactForm">
+                        <div class="form-group">
+                            <label for="name">Name</label>
+                            <input type="text" id="name" name="name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" name="email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="message">Message</label>
+                            <textarea id="message" name="message" rows="5" required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Send Message</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 WesleyDude.com. Built with ❤️ by Wesley.</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
