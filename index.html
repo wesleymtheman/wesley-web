@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="WesleyDude.com - A website built by Wesley to do cool stuff">
+    <title>WesleyDude.com - Cool Stuff by Wesley</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header class="header">
+        <nav class="nav">
+            <div class="nav-brand">
+                <h1>WesleyDude.com</h1>
+            </div>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#about">About</a></li>
+            </ul>
+            <button class="nav-toggle" aria-label="Toggle navigation">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </nav>
+    </header>
+
+    <main>
+        <section id="home" class="hero">
+            <div class="hero-content">
+                <h2 class="hero-title">Welcome to WesleyDude.com</h2>
+                <p class="hero-subtitle">A website built by Wesley to do cool stuff</p>
+                <div class="hero-buttons">
+                    <button class="btn btn-primary" id="exploreBtn">Explore Cool Stuff</button>
+                    <button class="btn btn-secondary" id="learnMoreBtn">Learn More</button>
+                </div>
+            </div>
+            <div class="hero-visual">
+                <div class="floating-card" id="card1">
+                    <span>🚀</span>
+                </div>
+                <div class="floating-card" id="card2">
+                    <span>💡</span>
+                </div>
+                <div class="floating-card" id="card3">
+                    <span>⚡</span>
+                </div>
+            </div>
+        </section>
+
+        <section id="about" class="about">
+            <div class="container">
+                <h2>About Wesley</h2>
+                <div class="about-content">
+                    <div class="about-text">
+                        <p>Hey there! I'm Wesley, and this is my corner of the internet where I build cool stuff and share my projects with the world.</p>
+                        <p>Whether it's web development, creative coding, or just experimenting with new technologies, you'll find it all here.</p>
+                    </div>
+                    <div class="about-stats">
+                        <div class="stat">
+                            <span class="stat-number" id="projectsCount">0</span>
+                            <span class="stat-label">Projects</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-number" id="linesOfCode">0</span>
+                            <span class="stat-label">Lines of Code</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 WesleyDude.com. Built with ❤️ by Wesley.</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
