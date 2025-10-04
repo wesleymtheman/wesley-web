@@ -6,7 +6,6 @@ document.addEventListener('DOMContentLoaded', function() {
     initNavigation();
     initHeroAnimations();
     initStatsCounter();
-    initContactForm();
     initScrollAnimations();
     initMobileMenu();
 });
@@ -55,9 +54,9 @@ function initHeroAnimations() {
     
     // Explore button functionality
     exploreBtn.addEventListener('click', function() {
-        const projectsSection = document.querySelector('#projects');
+        const aboutSection = document.querySelector('#about');
         const headerHeight = document.querySelector('.header').offsetHeight;
-        const targetPosition = projectsSection.offsetTop - headerHeight;
+        const targetPosition = aboutSection.offsetTop - headerHeight;
         
         window.scrollTo({
             top: targetPosition,
@@ -120,8 +119,7 @@ function initHeroAnimations() {
 function initStatsCounter() {
     const stats = [
         { element: document.getElementById('projectsCount'), target: 12 },
-        { element: document.getElementById('linesOfCode'), target: 15420 },
-        { element: document.getElementById('coffeeCups'), target: 847 }
+        { element: document.getElementById('linesOfCode'), target: 15420 }
     ];
     
     let hasAnimated = false;
@@ -166,39 +164,6 @@ function initStatsCounter() {
     animateStats(); // Check on load
 }
 
-// Contact form functionality
-function initContactForm() {
-    const contactForm = document.getElementById('contactForm');
-    
-    contactForm.addEventListener('submit', function(e) {
-        e.preventDefault();
-        
-        const formData = new FormData(this);
-        const name = formData.get('name');
-        const email = formData.get('email');
-        const message = formData.get('message');
-        
-        // Simulate form submission
-        const submitBtn = this.querySelector('button[type="submit"]');
-        const originalText = submitBtn.textContent;
-        
-        submitBtn.textContent = 'Sending...';
-        submitBtn.disabled = true;
-        
-        setTimeout(() => {
-            // Show success message
-            showNotification('Message sent successfully! Wesley will get back to you soon.', 'success');
-            
-            // Reset form
-            this.reset();
-            submitBtn.textContent = originalText;
-            submitBtn.disabled = false;
-            
-            // Log the message (in a real app, this would be sent to a server)
-            console.log('New message from:', name, email, message);
-        }, 2000);
-    });
-}
 
 // Scroll animations
 function initScrollAnimations() {
@@ -216,7 +181,7 @@ function initScrollAnimations() {
     }, observerOptions);
     
     // Observe elements for animation
-    const animateElements = document.querySelectorAll('.project-card, .about-text, .contact-info');
+    const animateElements = document.querySelectorAll('.about-text');
     animateElements.forEach(el => {
         observer.observe(el);
     });
