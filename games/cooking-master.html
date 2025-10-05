@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Cooking Master - A fun cooking game by Wesley">
+    <title>Cooking Master - WesleyDude.com</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="cooking-master.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header class="header">
+        <nav class="nav">
+            <div class="nav-brand">
+                <h1><a href="../index.html" style="text-decoration: none; color: inherit;">WesleyDude.com</a></h1>
+            </div>
+            <ul class="nav-links">
+                <li><a href="../index.html">Home</a></li>
+                <li><a href="../index.html#about">About</a></li>
+                <li><a href="index.html" class="active">Games</a></li>
+            </ul>
+            <button class="nav-toggle" aria-label="Toggle navigation">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </nav>
+    </header>
+
+    <main class="game-main">
+        <div class="game-container">
+            <!-- Game Header -->
+            <div class="game-header">
+                <div class="game-title">
+                    <h1>🍳 Cooking Master</h1>
+                    <p>Follow the recipe and cook delicious dishes!</p>
+                </div>
+                <div class="game-stats">
+                    <div class="stat">
+                        <span class="stat-label">Score</span>
+                        <span class="stat-value" id="score">0</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-label">Level</span>
+                        <span class="stat-value" id="level">1</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-label">Time</span>
+                        <span class="stat-value" id="timer">60</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Game Area -->
+            <div class="game-area">
+                <!-- Recipe Display -->
+                <div class="recipe-section">
+                    <h3>📋 Recipe</h3>
+                    <div class="recipe-display" id="recipeDisplay">
+                        <div class="recipe-item">
+                            <span class="ingredient">🥕 Carrot</span>
+                            <span class="timer">5s</span>
+                        </div>
+                        <div class="recipe-item">
+                            <span class="ingredient">🥔 Potato</span>
+                            <span class="timer">8s</span>
+                        </div>
+                        <div class="recipe-item">
+                            <span class="ingredient">🧅 Onion</span>
+                            <span class="timer">3s</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Cooking Station -->
+                <div class="cooking-station">
+                    <div class="stove">
+                        <div class="pan" id="pan">
+                            <div class="pan-content" id="panContent"></div>
+                        </div>
+                        <div class="flame"></div>
+                    </div>
+                    
+                    <!-- Ingredient Shelf -->
+                    <div class="ingredient-shelf">
+                        <div class="ingredient-item" data-ingredient="carrot" data-cook-time="5">
+                            <span class="ingredient-icon">🥕</span>
+                            <span class="ingredient-name">Carrot</span>
+                        </div>
+                        <div class="ingredient-item" data-ingredient="potato" data-cook-time="8">
+                            <span class="ingredient-icon">🥔</span>
+                            <span class="ingredient-name">Potato</span>
+                        </div>
+                        <div class="ingredient-item" data-ingredient="onion" data-cook-time="3">
+                            <span class="ingredient-icon">🧅</span>
+                            <span class="ingredient-name">Onion</span>
+                        </div>
+                        <div class="ingredient-item" data-ingredient="tomato" data-cook-time="4">
+                            <span class="ingredient-icon">🍅</span>
+                            <span class="ingredient-name">Tomato</span>
+                        </div>
+                        <div class="ingredient-item" data-ingredient="mushroom" data-cook-time="6">
+                            <span class="ingredient-icon">🍄</span>
+                            <span class="ingredient-name">Mushroom</span>
+                        </div>
+                        <div class="ingredient-item" data-ingredient="pepper" data-cook-time="4">
+                            <span class="ingredient-icon">🫑</span>
+                            <span class="ingredient-name">Pepper</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Progress Bar -->
+                <div class="progress-section">
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="progressFill"></div>
+                    </div>
+                    <div class="progress-text" id="progressText">Drag ingredients to the pan!</div>
+                </div>
+            </div>
+
+            <!-- Game Controls -->
+            <div class="game-controls">
+                <button class="btn btn-primary" id="startBtn">Start Cooking</button>
+                <button class="btn btn-secondary" id="resetBtn">Reset</button>
+                <button class="btn btn-outline" id="instructionsBtn">📖 Instructions</button>
+                <button class="btn btn-outline" id="backBtn">Back to Games</button>
+            </div>
+
+            <!-- Game Messages -->
+            <div class="game-messages" id="gameMessages"></div>
+
+            <!-- Instructions Modal -->
+            <div class="instructions-modal" id="instructionsModal">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h2>🍳 Cooking Master Instructions</h2>
+                        <button class="close-btn" id="closeInstructions">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="instruction-section">
+                            <h3>🎯 Objective</h3>
+                            <p>Follow recipes and cook delicious dishes by adding ingredients in the correct order and timing!</p>
+                        </div>
+                        
+                        <div class="instruction-section">
+                            <h3>🎮 How to Play</h3>
+                            <ol>
+                                <li><strong>Start Cooking:</strong> Click "Start Cooking" to begin</li>
+                                <li><strong>Follow the Recipe:</strong> Look at the recipe panel to see what ingredients you need</li>
+                                <li><strong>Add Ingredients:</strong> Click on ingredients in the correct order</li>
+                                <li><strong>Wait to Cook:</strong> Each ingredient has a cooking time - wait for it to finish</li>
+                                <li><strong>Serve the Dish:</strong> Click the pan when all ingredients are cooked</li>
+                                <li><strong>Earn Points:</strong> Get points for completing dishes + time bonuses</li>
+                            </ol>
+                        </div>
+                        
+                        <div class="instruction-section">
+                            <h3>⌨️ Keyboard Shortcuts</h3>
+                            <ul>
+                                <li><strong>1-6:</strong> Quick add ingredients (1=Carrot, 2=Potato, etc.)</li>
+                                <li><strong>SPACE:</strong> Serve the dish when ready</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="instruction-section">
+                            <h3>🏆 Scoring</h3>
+                            <ul>
+                                <li><strong>Recipe Points:</strong> Base points for completing dishes</li>
+                                <li><strong>Time Bonus:</strong> Extra points for remaining time</li>
+                                <li><strong>Level Up:</strong> Reach new levels every 500 points</li>
+                                <li><strong>High Score:</strong> Your best score is saved locally</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="instruction-section">
+                            <h3>💡 Tips</h3>
+                            <ul>
+                                <li>Follow the recipe order exactly</li>
+                                <li>Don't rush - wait for ingredients to cook</li>
+                                <li>Use keyboard shortcuts for faster gameplay</li>
+                                <li>Complete dishes quickly for time bonuses</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 WesleyDude.com. Built with ❤️ by Wesley.</p>
+        </div>
+    </footer>
+
+    <script src="../script.js"></script>
+    <script src="cooking-master.js"></script>
+</body>
+</html>
