@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Shop Master - A fun shop management game by Wesley">
+    <title>Shop Master - WesleyDude.com</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="shop-master.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header class="header">
+        <nav class="nav">
+            <div class="nav-brand">
+                <h1><a href="../index.html" style="text-decoration: none; color: inherit;">WesleyDude.com</a></h1>
+            </div>
+            <ul class="nav-links">
+                <li><a href="../index.html">Home</a></li>
+                <li><a href="../index.html#about">About</a></li>
+                <li><a href="index.html" class="active">Games</a></li>
+            </ul>
+            <button class="nav-toggle" aria-label="Toggle navigation">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </nav>
+    </header>
+
+    <main class="game-main">
+        <div class="game-container">
+            <!-- Game Header -->
+            <div class="game-header">
+                <div class="game-title">
+                    <h1>🏪 Shop Master</h1>
+                    <p>Run your own shop and make it profitable!</p>
+                </div>
+                <div class="game-stats">
+                    <div class="stat">
+                        <span class="stat-label">Money</span>
+                        <span class="stat-value" id="money">$1000</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-label">Day</span>
+                        <span class="stat-value" id="day">1</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-label">Reputation</span>
+                        <span class="stat-value" id="reputation">50</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-label">Time</span>
+                        <span class="stat-value" id="timeOfDay">🌅 Morning</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Game Area -->
+            <div class="game-area">
+                <!-- Shop Display -->
+                <div class="shop-section">
+                    <h3>🏪 Your Shop</h3>
+                    <div class="time-progress">
+                        <div class="time-progress-bar">
+                            <div class="time-progress-fill" id="timeProgress"></div>
+                        </div>
+                        <div class="time-progress-text" id="timeProgressText">Day Progress</div>
+                    </div>
+                    <div class="shop-display">
+                        <div class="shop-counter">
+                            <div class="cash-register">💰</div>
+                            <div class="customer-queue" id="customerQueue"></div>
+                        </div>
+                        <div class="shop-shelves">
+                            <div class="shelf" id="shelf1">
+                                <div class="shelf-label">Electronics</div>
+                                <div class="products" id="electronics"></div>
+                            </div>
+                            <div class="shelf" id="shelf2">
+                                <div class="shelf-label">Clothing</div>
+                                <div class="products" id="clothing"></div>
+                            </div>
+                            <div class="shelf" id="shelf3">
+                                <div class="shelf-label">Food</div>
+                                <div class="products" id="food"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Management Panel -->
+                <div class="management-panel">
+                    <div class="panel-tabs">
+                        <button class="tab-btn active" data-tab="inventory">📦 Inventory</button>
+                        <button class="tab-btn" data-tab="customers">👥 Customers</button>
+                        <button class="tab-btn" data-tab="upgrades">⚡ Upgrades</button>
+                    </div>
+
+                    <!-- Inventory Tab -->
+                    <div class="tab-content active" id="inventory-tab">
+                        <h4>Restock Products</h4>
+                        <div class="product-list">
+                            <div class="product-item" data-product="laptop">
+                                <span class="product-icon">💻</span>
+                                <span class="product-name">Laptop</span>
+                                <span class="product-price">$800</span>
+                                <button class="buy-btn" data-product="laptop">Buy</button>
+                            </div>
+                            <div class="product-item" data-product="phone">
+                                <span class="product-icon">📱</span>
+                                <span class="product-name">Phone</span>
+                                <span class="product-price">$600</span>
+                                <button class="buy-btn" data-product="phone">Buy</button>
+                            </div>
+                            <div class="product-item" data-product="shirt">
+                                <span class="product-icon">👕</span>
+                                <span class="product-name">Shirt</span>
+                                <span class="product-price">$25</span>
+                                <button class="buy-btn" data-product="shirt">Buy</button>
+                            </div>
+                            <div class="product-item" data-product="pants">
+                                <span class="product-icon">👖</span>
+                                <span class="product-name">Pants</span>
+                                <span class="product-price">$40</span>
+                                <button class="buy-btn" data-product="pants">Buy</button>
+                            </div>
+                            <div class="product-item" data-product="apple">
+                                <span class="product-icon">🍎</span>
+                                <span class="product-name">Apple</span>
+                                <span class="product-price">$2</span>
+                                <button class="buy-btn" data-product="apple">Buy</button>
+                            </div>
+                            <div class="product-item" data-product="bread">
+                                <span class="product-icon">🍞</span>
+                                <span class="product-name">Bread</span>
+                                <span class="product-price">$3</span>
+                                <button class="buy-btn" data-product="bread">Buy</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Customers Tab -->
+                    <div class="tab-content" id="customers-tab">
+                        <h4>Customer Satisfaction</h4>
+                        <div class="customer-stats">
+                            <div class="stat-item">
+                                <span class="stat-icon">😊</span>
+                                <span class="stat-text">Happy: <span id="happyCustomers">0</span></span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-icon">😐</span>
+                                <span class="stat-text">Neutral: <span id="neutralCustomers">0</span></span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-icon">😠</span>
+                                <span class="stat-text">Angry: <span id="angryCustomers">0</span></span>
+                            </div>
+                        </div>
+                        <div class="customer-tips">
+                            <h5>💡 Tips:</h5>
+                            <ul>
+                                <li>Keep products in stock</li>
+                                <li>Don't make customers wait too long</li>
+                                <li>Price products competitively</li>
+                                <li>Upgrade your shop to serve more customers</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Upgrades Tab -->
+                    <div class="tab-content" id="upgrades-tab">
+                        <h4>Shop Upgrades</h4>
+                        <div class="upgrade-list">
+                            <div class="upgrade-item" data-upgrade="counter">
+                                <span class="upgrade-icon">🏪</span>
+                                <div class="upgrade-info">
+                                    <span class="upgrade-name">Extra Counter</span>
+                                    <span class="upgrade-desc">Serve 2 customers at once</span>
+                                    <span class="upgrade-price">$500</span>
+                                </div>
+                                <button class="upgrade-btn" data-upgrade="counter">Buy</button>
+                            </div>
+                            <div class="upgrade-item" data-upgrade="storage">
+                                <span class="upgrade-icon">📦</span>
+                                <div class="upgrade-info">
+                                    <span class="upgrade-name">Storage Expansion</span>
+                                    <span class="upgrade-desc">Hold more inventory</span>
+                                    <span class="upgrade-price">$300</span>
+                                </div>
+                                <button class="upgrade-btn" data-upgrade="storage">Buy</button>
+                            </div>
+                            <div class="upgrade-item" data-upgrade="advertising">
+                                <span class="upgrade-icon">📢</span>
+                                <div class="upgrade-info">
+                                    <span class="upgrade-name">Advertising</span>
+                                    <span class="upgrade-desc">More customers per day</span>
+                                    <span class="upgrade-price">$200</span>
+                                </div>
+                                <button class="upgrade-btn" data-upgrade="advertising">Buy</button>
+                            </div>
+                            <div class="upgrade-item" data-upgrade="security">
+                                <span class="upgrade-icon">🛡️</span>
+                                <div class="upgrade-info">
+                                    <span class="upgrade-name">Security System</span>
+                                    <span class="upgrade-desc">Prevents robberies at night</span>
+                                    <span class="upgrade-price">$400</span>
+                                </div>
+                                <button class="upgrade-btn" data-upgrade="security">Buy</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Game Controls -->
+            <div class="game-controls">
+                <button class="btn btn-primary" id="startBtn">Start Day</button>
+                <button class="btn btn-secondary" id="pauseBtn">Pause</button>
+                <button class="btn btn-outline" id="instructionsBtn">📖 Instructions</button>
+                <button class="btn btn-outline" id="backBtn">Back to Games</button>
+            </div>
+
+            <!-- Game Messages -->
+            <div class="game-messages" id="gameMessages"></div>
+
+            <!-- Instructions Modal -->
+            <div class="instructions-modal" id="instructionsModal">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h2>🏪 Shop Master Instructions</h2>
+                        <button class="close-btn" id="closeInstructions">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="instruction-section">
+                            <h3>🎯 Objective</h3>
+                            <p>Run a successful shop by managing inventory, serving customers, and growing your business!</p>
+                        </div>
+                        
+                        <div class="instruction-section">
+                            <h3>🎮 How to Play</h3>
+                            <ol>
+                                <li><strong>Start Your Day:</strong> Click "Start Day" to begin serving customers</li>
+                                <li><strong>Manage Inventory:</strong> Use the Inventory tab to buy products for your shop</li>
+                                <li><strong>Serve Customers:</strong> Click on customers in the queue to serve them</li>
+                                <li><strong>Monitor Satisfaction:</strong> Keep customers happy to maintain reputation</li>
+                                <li><strong>Buy Upgrades:</strong> Use profits to upgrade your shop capabilities</li>
+                                <li><strong>End Day:</strong> Complete the day to see profits and start fresh</li>
+                            </ol>
+                        </div>
+                        
+                        <div class="instruction-section">
+                            <h3>🏪 Shop Management</h3>
+                            <ul>
+                                <li><strong>Inventory:</strong> Buy products to stock your shelves</li>
+                                <li><strong>Categories:</strong> Electronics, Clothing, and Food sections</li>
+                                <li><strong>Pricing:</strong> Products sell for more than you buy them</li>
+                                <li><strong>Stock:</strong> Keep products in stock or customers will leave angry</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="instruction-section">
+                            <h3>👥 Customer System</h3>
+                            <ul>
+                                <li><strong>Patience:</strong> Each customer has different patience levels</li>
+                                <li><strong>Money:</strong> Customers have different amounts to spend</li>
+                                <li><strong>Preferences:</strong> Customers want different products</li>
+                                <li><strong>Reputation:</strong> Happy customers increase reputation, angry ones decrease it</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="instruction-section">
+                            <h3>⚡ Upgrades</h3>
+                            <ul>
+                                <li><strong>Extra Counter:</strong> Serve 2 customers at once ($500)</li>
+                                <li><strong>Storage Expansion:</strong> Hold more inventory ($300)</li>
+                                <li><strong>Advertising:</strong> More customers per day ($200)</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="instruction-section">
+                            <h3>⌨️ Keyboard Shortcuts</h3>
+                            <ul>
+                                <li><strong>SPACE:</strong> Serve the next customer quickly</li>
+                                <li><strong>1-3:</strong> Switch between tabs (Inventory, Customers, Upgrades)</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="instruction-section">
+                            <h3>💡 Tips</h3>
+                            <ul>
+                                <li>Keep popular products in stock</li>
+                                <li>Don't let customers wait too long</li>
+                                <li>Balance inventory costs with customer demand</li>
+                                <li>Invest in upgrades to grow your business</li>
+                                <li>Monitor customer satisfaction to maintain reputation</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 WesleyDude.com. Built with ❤️ by Wesley.</p>
+        </div>
+    </footer>
+
+    <script src="../script.js"></script>
+    <script src="shop-master.js"></script>
+</body>
+</html>

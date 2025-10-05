@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Games by Wesley - Fun interactive games built with JavaScript">
+    <title>Games - WesleyDude.com</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="games.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header class="header">
+        <nav class="nav">
+            <div class="nav-brand">
+                <h1><a href="../index.html" style="text-decoration: none; color: inherit;">WesleyDude.com</a></h1>
+            </div>
+            <ul class="nav-links">
+                <li><a href="../index.html">Home</a></li>
+                <li><a href="../index.html#about">About</a></li>
+                <li><a href="index.html" class="active">Games</a></li>
+            </ul>
+            <button class="nav-toggle" aria-label="Toggle navigation">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </nav>
+    </header>
+
+    <main>
+        <section class="games-hero">
+            <div class="container">
+                <div class="games-hero-content">
+                    <h1 class="games-title">🎮 Wesley's Game Collection</h1>
+                    <p class="games-subtitle">Fun interactive games built with vanilla JavaScript</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="games-grid">
+            <div class="container">
+                <div class="games-container">
+                    <div class="game-card" data-game="shop-master">
+                        <div class="game-preview">
+                            <div class="game-icon">🏪</div>
+                            <div class="game-screenshot">
+                                <div class="screenshot-placeholder">
+                                    <span>💰</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="game-info">
+                            <h3>Shop Master</h3>
+                            <p>Run your own shop! Manage inventory, serve customers, and grow your business empire.</p>
+                            <div class="game-stats">
+                                <span class="difficulty">⭐⭐ Medium</span>
+                                <span class="category">Management</span>
+                            </div>
+                            <a href="shop-master.html" class="btn btn-primary play-btn">Play Game</a>
+                        </div>
+                    </div>
+
+                    <div class="game-card" data-game="cooking-master">
+                        <div class="game-preview">
+                            <div class="game-icon">🍳</div>
+                            <div class="game-screenshot">
+                                <div class="screenshot-placeholder">
+                                    <span>👨‍🍳</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="game-info">
+                            <h3>Cooking Master</h3>
+                            <p>Test your culinary skills! Cook dishes by following recipes and timing your ingredients perfectly.</p>
+                            <div class="game-stats">
+                                <span class="difficulty">⭐ Easy</span>
+                                <span class="category">Cooking</span>
+                            </div>
+                            <a href="cooking-master.html" class="btn btn-primary play-btn">Play Game</a>
+                        </div>
+                    </div>
+
+                    <div class="game-card coming-soon">
+                        <div class="game-preview">
+                            <div class="game-icon">🎯</div>
+                            <div class="game-screenshot">
+                                <div class="screenshot-placeholder">
+                                    <span>🚧</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="game-info">
+                            <h3>More Games Coming Soon!</h3>
+                            <p>Wesley is working on more exciting games. Check back soon for new adventures!</p>
+                            <div class="game-stats">
+                                <span class="difficulty">⭐ TBA</span>
+                                <span class="category">Various</span>
+                            </div>
+                            <button class="btn btn-secondary" disabled>Coming Soon</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="games-info">
+            <div class="container">
+                <div class="info-content">
+                    <h2>About These Games</h2>
+                    <div class="info-grid">
+                        <div class="info-card">
+                            <div class="info-icon">💻</div>
+                            <h3>Built with Vanilla JavaScript</h3>
+                            <p>No frameworks, no libraries - just pure JavaScript magic for maximum performance and learning.</p>
+                        </div>
+                        <div class="info-card">
+                            <div class="info-icon">🎨</div>
+                            <h3>Beautiful Design</h3>
+                            <p>Each game features carefully crafted UI/UX that matches Wesley's design aesthetic.</p>
+                        </div>
+                        <div class="info-card">
+                            <div class="info-icon">📱</div>
+                            <h3>Mobile Friendly</h3>
+                            <p>All games are fully responsive and work great on desktop, tablet, and mobile devices.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 WesleyDude.com. Built with ❤️ by Wesley.</p>
+        </div>
+    </footer>
+
+    <script src="../script.js"></script>
+    <script src="games.js"></script>
+</body>
+</html>
