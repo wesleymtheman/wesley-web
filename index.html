@@ -18,7 +18,7 @@
             </div>
             <ul class="nav-links">
                 <li><a href="#home">Home</a></li>
-                <li><a href="#about">About</a></li>
+                <li><a href="#lie-detector">Lie Detector</a></li>
                 <li><a href="games/index.html">Games</a></li>
             </ul>
             <button class="nav-toggle" aria-label="Toggle navigation">
@@ -50,30 +50,39 @@
                     <span>⚡</span>
                 </div>
             </div>
+            <div class="laser-beams"></div>
+            <div class="space-planets"></div>
+            <div class="asteroids"></div>
         </section>
 
-        <section id="about" class="about">
+        <section id="lie-detector" class="lie-detector">
             <div class="container">
-                <h2>About Wesley</h2>
-                <div class="about-content">
-                    <div class="about-text">
-                        <p>Hey there! I'm Wesley, and this is my corner of the internet where I build cool stuff and share my projects with the world.</p>
-                        <p>Whether it's web development, creative coding, or just experimenting with new technologies, you'll find it all here.</p>
+                <h2>Lie Detector</h2>
+                <div class="lie-detector-content">
+                    <div class="lie-detector-text">
+                        <p>Test your honesty with Wesley's interactive lie detector! Ask yourself a question and see if you're telling the truth.</p>
+                        <p>Click the detector to start your truth-telling journey!</p>
                     </div>
-                    <div class="about-stats">
-                        <div class="stat">
-                            <span class="stat-number" id="projectsCount">0</span>
-                            <span class="stat-label">Projects</span>
+                    <div class="lie-detector-machine">
+                        <div class="detector-screen">
+                            <div class="detector-display" id="detectorDisplay">Ready to Detect</div>
+                            <div class="detector-needle" id="detectorNeedle"></div>
                         </div>
-                        <div class="stat">
-                            <span class="stat-number" id="linesOfCode">0</span>
-                            <span class="stat-label">Lines of Code</span>
+                        <div class="detector-controls">
+                            <button class="btn btn-primary" id="detectBtn">Start Detection</button>
+                            <div class="sound-controls">
+                                <button class="btn btn-secondary sound-toggle" id="soundToggle">🔊 Sound On</button>
+                                <div class="volume-control">
+                                    <label for="volumeSlider">Volume:</label>
+                                    <input type="range" id="volumeSlider" min="0" max="100" value="50" class="volume-slider">
+                                </div>
+                            </div>
+                            <div class="detector-status" id="detectorStatus">Status: Idle</div>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
-
 
     </main>
 

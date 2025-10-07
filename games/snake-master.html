@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Snake Master - A fun 2D snake game by Wesley">
+    <title>Snake Master - WesleyDude.com</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="snake-master.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header class="header">
+        <nav class="nav">
+            <div class="nav-brand">
+                <h1><a href="../index.html" style="text-decoration: none; color: inherit;">WesleyDude.com</a></h1>
+            </div>
+            <ul class="nav-links">
+                <li><a href="../index.html">Home</a></li>
+                <li><a href="../index.html#lie-detector">Lie Detector</a></li>
+                <li><a href="index.html" class="active">Games</a></li>
+            </ul>
+            <button class="nav-toggle" aria-label="Toggle navigation">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </nav>
+    </header>
+
+    <main class="game-main">
+        <div class="game-container">
+            <!-- Game Header -->
+            <div class="game-header">
+                <div class="game-title">
+                    <h1>🐍 Snake Master</h1>
+                    <p>Eat food and grow your snake! Use WASD to move!</p>
+                </div>
+                <div class="game-stats">
+                    <div class="stat">
+                        <span class="stat-label">Score</span>
+                        <span class="stat-value" id="score">0</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-label">High Score</span>
+                        <span class="stat-value" id="highScore">0</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-label">Length</span>
+                        <span class="stat-value" id="length">3</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-label">Speed</span>
+                        <span class="stat-value" id="speed">1</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Game Area -->
+            <div class="game-area">
+                <div class="game-board-container">
+                    <canvas id="gameCanvas" width="400" height="400"></canvas>
+                    <div class="game-overlay" id="gameOverlay">
+                        <div class="overlay-content">
+                            <h2 id="overlayTitle">Snake Master</h2>
+                            <p id="overlayMessage">Press SPACE to start!</p>
+                            <div class="controls-info">
+                                <h3>🎮 Controls</h3>
+                                <div class="control-grid">
+                                    <div class="control-item">
+                                        <span class="key">W</span>
+                                        <span class="action">Up</span>
+                                    </div>
+                                    <div class="control-item">
+                                        <span class="key">A</span>
+                                        <span class="action">Left</span>
+                                    </div>
+                                    <div class="control-item">
+                                        <span class="key">S</span>
+                                        <span class="action">Down</span>
+                                    </div>
+                                    <div class="control-item">
+                                        <span class="key">D</span>
+                                        <span class="action">Right</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Game Controls -->
+            <div class="game-controls">
+                <button class="btn btn-primary" id="startBtn">Start Game</button>
+                <button class="btn btn-secondary" id="pauseBtn">Pause</button>
+                <button class="btn btn-outline" id="instructionsBtn">📖 Instructions</button>
+                <button class="btn btn-outline" id="backBtn">Back to Games</button>
+            </div>
+
+            <!-- Game Messages -->
+            <div class="game-messages" id="gameMessages"></div>
+
+            <!-- Instructions Modal -->
+            <div class="instructions-modal" id="instructionsModal">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h2>🐍 Snake Master Instructions</h2>
+                        <button class="close-btn" id="closeInstructions">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="instruction-section">
+                            <h3>🎯 Objective</h3>
+                            <p>Control your snake to eat food and grow longer! Avoid hitting walls or yourself.</p>
+                        </div>
+                        
+                        <div class="instruction-section">
+                            <h3>🎮 How to Play</h3>
+                            <ol>
+                                <li><strong>Start:</strong> Press SPACE or click "Start Game" to begin</li>
+                                <li><strong>Move:</strong> Use WASD keys to control your snake</li>
+                                <li><strong>Eat Food:</strong> Guide your snake to the red food to grow</li>
+                                <li><strong>Survive:</strong> Don't hit walls or your own tail!</li>
+                                <li><strong>Score:</strong> Each food eaten gives you 10 points</li>
+                            </ol>
+                        </div>
+                        
+                        <div class="instruction-section">
+                            <h3>⌨️ Controls</h3>
+                            <ul>
+                                <li><strong>W:</strong> Move Up</li>
+                                <li><strong>A:</strong> Move Left</li>
+                                <li><strong>S:</strong> Move Down</li>
+                                <li><strong>D:</strong> Move Right</li>
+                                <li><strong>SPACE:</strong> Start/Pause Game</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="instruction-section">
+                            <h3>🏆 Scoring</h3>
+                            <ul>
+                                <li><strong>Food:</strong> +10 points per food eaten</li>
+                                <li><strong>Length Bonus:</strong> Longer snake = higher multiplier</li>
+                                <li><strong>Speed Bonus:</strong> Faster gameplay = more points</li>
+                                <li><strong>High Score:</strong> Your best score is saved locally</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="instruction-section">
+                            <h3>💡 Tips</h3>
+                            <ul>
+                                <li>Plan your moves ahead to avoid getting trapped</li>
+                                <li>Use the walls to your advantage</li>
+                                <li>Don't rush - take your time to plan routes</li>
+                                <li>Practice makes perfect!</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 WesleyDude.com. Built with ❤️ by Wesley.</p>
+        </div>
+    </footer>
+
+    <script src="../script.js"></script>
+    <script src="snake-master.js"></script>
+</body>
+</html>

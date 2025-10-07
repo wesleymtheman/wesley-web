@@ -4,7 +4,7 @@
 class ShopMaster {
     constructor() {
         this.gameState = 'waiting'; // waiting, playing, paused, finished
-        this.money = 0; // Start with no money
+        this.money = 1000; // Start with $1000
         this.day = 1;
         this.reputation = 50;
         this.gameSpeed = 2000; // milliseconds between customer arrivals
@@ -17,10 +17,16 @@ class ShopMaster {
         this.inventory = {
             laptop: 1,
             phone: 1,
+            tablet: 1,
+            headphones: 1,
             shirt: 1,
             pants: 1,
+            jacket: 1,
+            shoes: 1,
             apple: 1,
-            bread: 1
+            bread: 1,
+            milk: 1,
+            eggs: 1
         }; // Start with 1 of each item
         this.upgrades = {
             counter: false,
@@ -34,6 +40,8 @@ class ShopMaster {
             angry: 0
         };
         this.robberyChance = 0.1; // 10% chance per night hour
+        this.startDayHandler = () => this.startDay();
+        this.endDayHandler = null;
         
         this.products = {
             laptop: { 
@@ -54,6 +62,24 @@ class ShopMaster {
                 demandWeight: 8, // Medium demand
                 timePreferences: { morning: 0.2, afternoon: 0.5, evening: 0.2, night: 0.1 }
             },
+            tablet: { 
+                name: 'Tablet', 
+                icon: '📱', 
+                cost: 400, 
+                sellPrice: 600, 
+                category: 'electronics',
+                demandWeight: 10, // Medium demand
+                timePreferences: { morning: 0.3, afternoon: 0.4, evening: 0.2, night: 0.1 }
+            },
+            headphones: { 
+                name: 'Headphones', 
+                icon: '🎧', 
+                cost: 150, 
+                sellPrice: 220, 
+                category: 'electronics',
+                demandWeight: 12, // Medium-high demand
+                timePreferences: { morning: 0.2, afternoon: 0.4, evening: 0.3, night: 0.1 }
+            },
             shirt: { 
                 name: 'Shirt', 
                 icon: '👕', 
@@ -72,6 +98,24 @@ class ShopMaster {
                 demandWeight: 12, // Medium-high demand
                 timePreferences: { morning: 0.2, afternoon: 0.5, evening: 0.2, night: 0.1 }
             },
+            jacket: { 
+                name: 'Jacket', 
+                icon: '🧥', 
+                cost: 80, 
+                sellPrice: 120, 
+                category: 'clothing',
+                demandWeight: 8, // Medium demand
+                timePreferences: { morning: 0.4, afternoon: 0.3, evening: 0.2, night: 0.1 }
+            },
+            shoes: { 
+                name: 'Shoes', 
+                icon: '👟', 
+                cost: 60, 
+                sellPrice: 90, 
+                category: 'clothing',
+                demandWeight: 10, // Medium demand
+                timePreferences: { morning: 0.3, afternoon: 0.4, evening: 0.2, night: 0.1 }
+            },
             apple: { 
                 name: 'Apple', 
                 icon: '🍎', 
@@ -88,6 +132,24 @@ class ShopMaster {
                 sellPrice: 5, 
                 category: 'food',
                 demandWeight: 20, // High demand - essential food
+                timePreferences: { morning: 0.5, afternoon: 0.3, evening: 0.1, night: 0.1 }
+            },
+            milk: { 
+                name: 'Milk', 
+                icon: '🥛', 
+                cost: 4, 
+                sellPrice: 6, 
+                category: 'food',
+                demandWeight: 18, // High demand
+                timePreferences: { morning: 0.6, afternoon: 0.2, evening: 0.1, night: 0.1 }
+            },
+            eggs: { 
+                name: 'Eggs', 
+                icon: '🥚', 
+                cost: 5, 
+                sellPrice: 8, 
+                category: 'food',
+                demandWeight: 15, // High demand
                 timePreferences: { morning: 0.5, afternoon: 0.3, evening: 0.1, night: 0.1 }
             }
         };
@@ -119,9 +181,7 @@ class ShopMaster {
     
     bindEvents() {
         // Start button
-        document.getElementById('startBtn').addEventListener('click', () => {
-            this.startDay();
-        });
+        document.getElementById('startBtn').addEventListener('click', this.startDayHandler);
         
         // Pause button
         document.getElementById('pauseBtn').addEventListener('click', () => {
@@ -219,8 +279,12 @@ class ShopMaster {
             this.startDayTimer();
             this.startTimeProgression();
             this.showMessage('Day started! Customers are coming! 👥', 'info');
-            document.getElementById('startBtn').textContent = 'End Day';
-            document.getElementById('startBtn').onclick = () => this.endDay();
+            
+            const startBtn = document.getElementById('startBtn');
+            startBtn.textContent = 'End Day';
+            startBtn.removeEventListener('click', this.startDayHandler);
+            this.endDayHandler = () => this.endDay();
+            startBtn.addEventListener('click', this.endDayHandler);
         }
     }
     
@@ -249,8 +313,11 @@ class ShopMaster {
             
             this.showMessage(`Day ${this.day - 1} complete! Profit: $${dayProfit} 💰`, 'success');
             
-            document.getElementById('startBtn').textContent = 'Start Day';
-            document.getElementById('startBtn').onclick = () => this.startDay();
+            const startBtn = document.getElementById('startBtn');
+            startBtn.textContent = 'Start Day';
+            startBtn.removeEventListener('click', this.endDayHandler);
+            this.startDayHandler = () => this.startDay();
+            startBtn.addEventListener('click', this.startDayHandler);
         }
     }
     

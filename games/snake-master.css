@@ -1,0 +1,182 @@
+/* Snake Master Game Styles */
+/* WesleyDude.com */
+
+.game-board-container {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    margin: 2rem 0;
+}
+
+#gameCanvas {
+    border: 3px solid rgba(255, 107, 107, 0.4);
+    border-radius: 12px;
+    background: linear-gradient(135deg, #1a1a2e, #16213e);
+    box-shadow: 
+        0 8px 32px rgba(0, 0, 0, 0.4),
+        0 0 20px rgba(255, 107, 107, 0.2),
+        inset 0 0 20px rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+}
+
+.game-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, 
+        rgba(26, 26, 46, 0.95), 
+        rgba(22, 33, 62, 0.95));
+    backdrop-filter: blur(15px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 12px;
+    transition: opacity 0.3s ease;
+    border: 2px solid rgba(255, 107, 107, 0.3);
+}
+
+.game-overlay.hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.overlay-content {
+    text-align: center;
+    color: white;
+    padding: 2rem;
+}
+
+.overlay-content h2 {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    background: linear-gradient(45deg, 
+        #ff6b6b, #feca57, #48dbfb, #ff9ff3, #54a0ff);
+    background-size: 300% 300%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: rainbowShift 3s ease-in-out infinite;
+    text-shadow: 0 0 20px rgba(255, 107, 107, 0.5);
+}
+
+.overlay-content p {
+    font-size: 1.2rem;
+    margin-bottom: 2rem;
+    color: #ccc;
+}
+
+.controls-info {
+    margin-top: 2rem;
+}
+
+.controls-info h3 {
+    color: #4CAF50;
+    margin-bottom: 1rem;
+}
+
+.control-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+    max-width: 200px;
+    margin: 0 auto;
+}
+
+.control-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.key {
+    background: linear-gradient(135deg, #333, #555);
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    font-weight: bold;
+    font-size: 1.1rem;
+    min-width: 40px;
+    border: 2px solid rgba(255, 107, 107, 0.4);
+    box-shadow: 
+        0 4px 8px rgba(0, 0, 0, 0.3),
+        0 0 10px rgba(255, 107, 107, 0.2);
+    transition: all 0.3s ease;
+}
+
+.key:hover {
+    transform: translateY(-2px);
+    box-shadow: 
+        0 6px 12px rgba(0, 0, 0, 0.4),
+        0 0 15px rgba(255, 107, 107, 0.4);
+}
+
+.action {
+    font-size: 0.9rem;
+    color: #ccc;
+}
+
+.game-messages {
+    margin-top: 1rem;
+    text-align: center;
+}
+
+.message {
+    background: #333;
+    color: white;
+    padding: 0.75rem 1.5rem;
+    border-radius: 6px;
+    margin: 0.5rem auto;
+    max-width: 400px;
+    opacity: 0;
+    transform: translateY(-10px);
+    transition: all 0.3s ease;
+}
+
+.message.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.message.success {
+    background: #4CAF50;
+}
+
+.message.error {
+    background: #f44336;
+}
+
+.message.info {
+    background: #2196F3;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    #gameCanvas {
+        width: 300px;
+        height: 300px;
+    }
+    
+    .overlay-content h2 {
+        font-size: 2rem;
+    }
+    
+    .control-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.5rem;
+    }
+    
+    .key {
+        padding: 0.4rem 0.8rem;
+        font-size: 1rem;
+    }
+}
+
+/* Rainbow Animation */
+@keyframes rainbowShift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
