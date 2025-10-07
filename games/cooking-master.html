@@ -51,6 +51,14 @@
                         <span class="stat-label">Time</span>
                         <span class="stat-value" id="timer">60</span>
                     </div>
+                    <div class="stat">
+                        <span class="stat-label">Mistakes</span>
+                        <span class="stat-value" id="mistakes">0/3</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-label">Combo</span>
+                        <span class="stat-value" id="combo">0</span>
+                    </div>
                 </div>
             </div>
 
@@ -110,6 +118,46 @@
                             <span class="ingredient-icon">🫑</span>
                             <span class="ingredient-name">Pepper</span>
                         </div>
+                        <div class="ingredient-item" data-ingredient="broccoli" data-cook-time="6">
+                            <span class="ingredient-icon">🥦</span>
+                            <span class="ingredient-name">Broccoli</span>
+                        </div>
+                        <div class="ingredient-item" data-ingredient="corn" data-cook-time="7">
+                            <span class="ingredient-icon">🌽</span>
+                            <span class="ingredient-name">Corn</span>
+                        </div>
+                        <div class="ingredient-item" data-ingredient="garlic" data-cook-time="2">
+                            <span class="ingredient-icon">🧄</span>
+                            <span class="ingredient-name">Garlic</span>
+                        </div>
+                        <div class="ingredient-item" data-ingredient="spinach" data-cook-time="3">
+                            <span class="ingredient-icon">🥬</span>
+                            <span class="ingredient-name">Spinach</span>
+                        </div>
+                        <div class="ingredient-item" data-ingredient="cheese" data-cook-time="2">
+                            <span class="ingredient-icon">🧀</span>
+                            <span class="ingredient-name">Cheese</span>
+                        </div>
+                        <div class="ingredient-item" data-ingredient="bacon" data-cook-time="3">
+                            <span class="ingredient-icon">🥓</span>
+                            <span class="ingredient-name">Bacon</span>
+                        </div>
+                        <div class="ingredient-item" data-ingredient="chicken" data-cook-time="6">
+                            <span class="ingredient-icon">🍗</span>
+                            <span class="ingredient-name">Chicken</span>
+                        </div>
+                        <div class="ingredient-item" data-ingredient="fish" data-cook-time="4">
+                            <span class="ingredient-icon">🐟</span>
+                            <span class="ingredient-name">Fish</span>
+                        </div>
+                        <div class="ingredient-item" data-ingredient="rice" data-cook-time="3">
+                            <span class="ingredient-icon">🍚</span>
+                            <span class="ingredient-name">Rice</span>
+                        </div>
+                        <div class="ingredient-item" data-ingredient="pasta" data-cook-time="4">
+                            <span class="ingredient-icon">🍝</span>
+                            <span class="ingredient-name">Pasta</span>
+                        </div>
                     </div>
                 </div>
 
@@ -161,7 +209,10 @@
                         <div class="instruction-section">
                             <h3>⌨️ Keyboard Shortcuts</h3>
                             <ul>
-                                <li><strong>1-6:</strong> Quick add ingredients (1=Carrot, 2=Potato, etc.)</li>
+                                <li><strong>1-6:</strong> Quick add ingredients (1=Carrot, 2=Potato, 3=Onion, 4=Tomato, 5=Mushroom, 6=Pepper)</li>
+                                <li><strong>7-0:</strong> More ingredients (7=Broccoli, 8=Corn, 9=Garlic, 0=Spinach)</li>
+                                <li><strong>Q-W:</strong> Special ingredients (Q=Cheese, W=Bacon)</li>
+                                <li><strong>E-Y:</strong> Protein ingredients (E=Chicken, R=Fish, T=Rice, Y=Pasta)</li>
                                 <li><strong>SPACE:</strong> Serve the dish when ready</li>
                             </ul>
                         </div>
@@ -170,8 +221,11 @@
                             <h3>🏆 Scoring</h3>
                             <ul>
                                 <li><strong>Recipe Points:</strong> Base points for completing dishes</li>
-                                <li><strong>Time Bonus:</strong> Extra points for remaining time</li>
-                                <li><strong>Level Up:</strong> Reach new levels every 500 points</li>
+                                <li><strong>Time Bonus:</strong> Extra points for remaining time (3x multiplier)</li>
+                                <li><strong>Combo System:</strong> 20% bonus per consecutive perfect dish</li>
+                                <li><strong>Perfect Bonus:</strong> +100 points for dishes with no mistakes</li>
+                                <li><strong>Streak Bonus:</strong> +10 points per dish in a row</li>
+                                <li><strong>Level Up:</strong> Exponential score requirements for progression</li>
                                 <li><strong>High Score:</strong> Your best score is saved locally</li>
                             </ul>
                         </div>
@@ -179,10 +233,13 @@
                         <div class="instruction-section">
                             <h3>💡 Tips</h3>
                             <ul>
-                                <li>Follow the recipe order exactly</li>
-                                <li>Don't rush - wait for ingredients to cook</li>
+                                <li>Follow the recipe order exactly - mistakes cost time!</li>
+                                <li>Don't rush - wait for ingredients to cook properly</li>
                                 <li>Use keyboard shortcuts for faster gameplay</li>
                                 <li>Complete dishes quickly for time bonuses</li>
+                                <li>Avoid mistakes to maintain your combo multiplier</li>
+                                <li>Perfect dishes give massive bonus points</li>
+                                <li>Higher levels have faster cooking times and fewer allowed mistakes</li>
                             </ul>
                         </div>
                     </div>

@@ -1,7 +1,10 @@
 /* Games Section Styles */
 
+/* Games Hero Section */
 .games-hero {
-    background: linear-gradient(135deg, #ff6b6b 0%, #feca57 100%);
+    background: 
+        radial-gradient(ellipse at top, #1a1a2e 0%, #16213e 30%, #0f3460 70%, #000000 100%),
+        linear-gradient(45deg, #0a0a0a 0%, #1a1a2e 50%, #0f3460 100%);
     color: white;
     padding: 8rem 0 4rem;
     text-align: center;
@@ -16,7 +19,75 @@
     left: 0;
     right: 0;
     bottom: 0;
-    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="gameGrain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="50" cy="50" r="1" fill="white" opacity="0.1"/></pattern></defs><rect width="100" height="100" fill="url(%23gameGrain)"/></svg>');
+    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"><defs><pattern id="spaceStars" width="200" height="200" patternUnits="userSpaceOnUse"><circle cx="20" cy="20" r="0.8" fill="white" opacity="0.9"/><circle cx="80" cy="30" r="0.5" fill="white" opacity="0.7"/><circle cx="40" cy="70" r="0.6" fill="white" opacity="0.8"/><circle cx="90" cy="80" r="0.3" fill="white" opacity="0.6"/><circle cx="150" cy="50" r="0.4" fill="white" opacity="0.7"/><circle cx="120" cy="120" r="0.7" fill="white" opacity="0.8"/><circle cx="60" cy="150" r="0.5" fill="white" opacity="0.6"/><circle cx="180" cy="180" r="0.3" fill="white" opacity="0.5"/><circle cx="10" cy="100" r="0.4" fill="white" opacity="0.7"/><circle cx="160" cy="20" r="0.6" fill="white" opacity="0.8"/></pattern></defs><rect width="200" height="200" fill="url(%23spaceStars)"/></svg>');
+    opacity: 0.4;
+    animation: spaceTwinkle 4s ease-in-out infinite alternate;
+}
+
+@keyframes spaceTwinkle {
+    0% { opacity: 0.2; transform: scale(1); }
+    100% { opacity: 0.6; transform: scale(1.02); }
+}
+
+/* 1000 Kitties Background */
+.kitty-army {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    pointer-events: none;
+    z-index: 1;
+    overflow: hidden;
+}
+
+.kitty-army::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: 
+        /* Row 1 */
+        url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40"><circle cx="20" cy="20" r="15" fill="%23ff6b6b" opacity="0.3"/><circle cx="15" cy="17" r="3" fill="%23000" opacity="0.6"/><circle cx="25" cy="17" r="3" fill="%23000" opacity="0.6"/><circle cx="20" cy="22" r="2" fill="%23ff4757" opacity="0.7"/><polygon points="20,25 18,28 22,28" fill="%23ff4757" opacity="0.7"/></svg>'),
+        url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40"><circle cx="20" cy="20" r="15" fill="%23667eea" opacity="0.3"/><circle cx="15" cy="17" r="3" fill="%23000" opacity="0.6"/><circle cx="25" cy="17" r="3" fill="%23000" opacity="0.6"/><circle cx="20" cy="22" r="2" fill="%234f46e5" opacity="0.7"/><polygon points="20,25 18,28 22,28" fill="%234f46e5" opacity="0.7"/></svg>'),
+        url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40"><circle cx="20" cy="20" r="15" fill="%2310b981" opacity="0.3"/><circle cx="15" cy="17" r="3" fill="%23000" opacity="0.6"/><circle cx="25" cy="17" r="3" fill="%23000" opacity="0.6"/><circle cx="20" cy="22" r="2" fill="%23059669" opacity="0.7"/><polygon points="20,25 18,28 22,28" fill="%23059669" opacity="0.7"/></svg>'),
+        url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40"><circle cx="20" cy="20" r="15" fill="%23f59e0b" opacity="0.3"/><circle cx="15" cy="17" r="3" fill="%23000" opacity="0.6"/><circle cx="25" cy="17" r="3" fill="%23000" opacity="0.6"/><circle cx="20" cy="22" r="2" fill="%23d97706" opacity="0.7"/><polygon points="20,25 18,28 22,28" fill="%23d97706" opacity="0.7"/></svg>'),
+        url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40"><circle cx="20" cy="20" r="15" fill="%23ef4444" opacity="0.3"/><circle cx="15" cy="17" r="3" fill="%23000" opacity="0.6"/><circle cx="25" cy="17" r="3" fill="%23000" opacity="0.6"/><circle cx="20" cy="22" r="2" fill="%23dc2626" opacity="0.7"/><polygon points="20,25 18,28 22,28" fill="%23dc2626" opacity="0.7"/></svg>'),
+        url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40"><circle cx="20" cy="20" r="15" fill="%238b5cf6" opacity="0.3"/><circle cx="15" cy="17" r="3" fill="%23000" opacity="0.6"/><circle cx="25" cy="17" r="3" fill="%23000" opacity="0.6"/><circle cx="20" cy="22" r="2" fill="%237c3aed" opacity="0.7"/><polygon points="20,25 18,28 22,28" fill="%237c3aed" opacity="0.7"/></svg>'),
+        url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40"><circle cx="20" cy="20" r="15" fill="%23ec4899" opacity="0.3"/><circle cx="15" cy="17" r="3" fill="%23000" opacity="0.6"/><circle cx="25" cy="17" r="3" fill="%23000" opacity="0.6"/><circle cx="20" cy="22" r="2" fill="%23db2777" opacity="0.7"/><polygon points="20,25 18,28 22,28" fill="%23db2777" opacity="0.7"/></svg>'),
+        url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40"><circle cx="20" cy="20" r="15" fill="%2306b6d4" opacity="0.3"/><circle cx="15" cy="17" r="3" fill="%23000" opacity="0.6"/><circle cx="25" cy="17" r="3" fill="%23000" opacity="0.6"/><circle cx="20" cy="22" r="2" fill="%2308969e" opacity="0.7"/><polygon points="20,25 18,28 22,28" fill="%2308969e" opacity="0.7"/></svg>');
+    background-size: 40px 40px;
+    background-repeat: repeat;
+    animation: kittyArmyMove 20s linear infinite;
+    opacity: 0.4;
+}
+
+@keyframes kittyArmyMove {
+    0% { transform: translateX(0) translateY(0); }
+    25% { transform: translateX(-10px) translateY(-5px); }
+    50% { transform: translateX(0) translateY(-10px); }
+    75% { transform: translateX(10px) translateY(-5px); }
+    100% { transform: translateX(0) translateY(0); }
+}
+
+/* Additional kitty layers for density */
+.kitty-army::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: 
+        url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 30"><circle cx="15" cy="15" r="10" fill="%23ff6b6b" opacity="0.2"/><circle cx="12" cy="13" r="2" fill="%23000" opacity="0.4"/><circle cx="18" cy="13" r="2" fill="%23000" opacity="0.4"/><circle cx="15" cy="16" r="1.5" fill="%23ff4757" opacity="0.5"/></svg>'),
+        url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 30"><circle cx="15" cy="15" r="10" fill="%23667eea" opacity="0.2"/><circle cx="12" cy="13" r="2" fill="%23000" opacity="0.4"/><circle cx="18" cy="13" r="2" fill="%23000" opacity="0.4"/><circle cx="15" cy="16" r="1.5" fill="%234f46e5" opacity="0.5"/></svg>'),
+        url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 30"><circle cx="15" cy="15" r="10" fill="%2310b981" opacity="0.2"/><circle cx="12" cy="13" r="2" fill="%23000" opacity="0.4"/><circle cx="18" cy="13" r="2" fill="%23000" opacity="0.4"/><circle cx="15" cy="16" r="1.5" fill="%23059669" opacity="0.5"/></svg>');
+    background-size: 30px 30px;
+    background-repeat: repeat;
+    background-position: 15px 15px;
+    animation: kittyArmyMove 25s linear infinite reverse;
     opacity: 0.3;
 }
 
@@ -30,6 +101,15 @@
     font-weight: 700;
     margin-bottom: 1rem;
     line-height: 1.2;
+    background: linear-gradient(45deg, 
+        #ff6b6b, #feca57, #48dbfb, #ff9ff3, #54a0ff, #5f27cd,
+        #00d2d3, #ff9f43, #ee5a24, #0abde3);
+    background-size: 400% 400%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: rainbowShift 4s ease-in-out infinite;
+    text-shadow: 0 0 30px rgba(255, 107, 107, 0.5);
 }
 
 .games-subtitle {
@@ -42,6 +122,20 @@
 .games-grid {
     padding: 5rem 0;
     background: var(--bg-secondary);
+    position: relative;
+    overflow: hidden;
+}
+
+/* 1000 Kitties Background */
+.kitty-army {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    pointer-events: none;
+    z-index: 1;
+    overflow: hidden;
 }
 
 .games-container {
@@ -53,17 +147,33 @@
 }
 
 .game-card {
-    background: white;
+    background: linear-gradient(135deg, 
+        rgba(255, 255, 255, 0.95), 
+        rgba(255, 107, 107, 0.05), 
+        rgba(72, 219, 251, 0.05));
     border-radius: var(--radius-xl);
-    box-shadow: var(--shadow-lg);
+    box-shadow: 
+        var(--shadow-lg),
+        0 0 20px rgba(255, 107, 107, 0.2);
     overflow: hidden;
     transition: all 0.3s ease;
-    border: 1px solid var(--border-color);
+    border: 2px solid rgba(255, 107, 107, 0.3);
+    position: relative;
+    z-index: 2;
+    backdrop-filter: blur(10px);
 }
 
 .game-card:hover {
-    transform: translateY(-8px);
-    box-shadow: var(--shadow-xl);
+    transform: translateY(-12px) scale(1.02);
+    box-shadow: 
+        var(--shadow-xl),
+        0 0 40px rgba(255, 107, 107, 0.4),
+        0 0 80px rgba(72, 219, 251, 0.3);
+    border-color: rgba(255, 107, 107, 0.6);
+    background: linear-gradient(135deg, 
+        rgba(255, 255, 255, 0.98), 
+        rgba(255, 107, 107, 0.1), 
+        rgba(72, 219, 251, 0.1));
 }
 
 .game-card.coming-soon {
@@ -74,11 +184,14 @@
 .game-preview {
     position: relative;
     height: 200px;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: linear-gradient(135deg, 
+        #ff6b6b 0%, #feca57 25%, #48dbfb 50%, #ff9ff3 75%, #54a0ff 100%);
+    background-size: 300% 300%;
     display: flex;
     align-items: center;
     justify-content: center;
     overflow: hidden;
+    animation: rainbowShift 6s ease-in-out infinite;
 }
 
 .game-icon {
@@ -159,62 +272,28 @@
     padding: 0.875rem 1.5rem;
     font-weight: 600;
     transition: all 0.3s ease;
+    background: linear-gradient(45deg, 
+        #ff6b6b, #feca57, #48dbfb, #ff9ff3, #54a0ff);
+    background-size: 300% 300%;
+    color: white;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 
+        0 4px 15px rgba(255, 107, 107, 0.4),
+        0 0 20px rgba(255, 107, 107, 0.3);
+    animation: rainbowShift 3s ease-in-out infinite;
 }
 
 .play-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: var(--shadow-lg);
+    transform: translateY(-3px) scale(1.05);
+    box-shadow: 
+        0 8px 25px rgba(255, 107, 107, 0.6),
+        0 0 40px rgba(72, 219, 251, 0.4),
+        0 0 80px rgba(255, 159, 243, 0.3);
+    background: linear-gradient(45deg, 
+        #5f27cd, #00d2d3, #ff9f43, #ee5a24, #0abde3);
+    animation: rainbowShift 1s ease-in-out infinite;
 }
 
-.games-info {
-    padding: 5rem 0;
-    background: white;
-}
-
-.info-content h2 {
-    text-align: center;
-    margin-bottom: 3rem;
-    font-size: 2.5rem;
-    color: var(--text-primary);
-}
-
-.info-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 2rem;
-    max-width: 1000px;
-    margin: 0 auto;
-}
-
-.info-card {
-    text-align: center;
-    padding: 2rem;
-    border-radius: var(--radius-lg);
-    background: var(--bg-secondary);
-    transition: all 0.3s ease;
-}
-
-.info-card:hover {
-    transform: translateY(-4px);
-    box-shadow: var(--shadow-md);
-}
-
-.info-icon {
-    font-size: 3rem;
-    margin-bottom: 1rem;
-}
-
-.info-card h3 {
-    font-size: 1.25rem;
-    font-weight: 600;
-    margin-bottom: 1rem;
-    color: var(--text-primary);
-}
-
-.info-card p {
-    color: var(--text-secondary);
-    line-height: 1.6;
-}
 
 .nav-links .active {
     color: var(--primary-color);
@@ -244,13 +323,20 @@
         margin: 0 1rem;
     }
     
-    .info-grid {
-        grid-template-columns: 1fr;
-        gap: 1.5rem;
-    }
     
     .games-hero {
         padding: 6rem 0 3rem;
+    }
+    
+    /* Optimize kitty army for mobile */
+    .kitty-army::before {
+        background-size: 25px 25px;
+        opacity: 0.3;
+    }
+    
+    .kitty-army::after {
+        background-size: 20px 20px;
+        opacity: 0.2;
     }
 }
 
@@ -267,9 +353,6 @@
         padding: 1.5rem;
     }
     
-    .info-card {
-        padding: 1.5rem;
-    }
 }
 
 /* Game Card Animations */
@@ -292,3 +375,134 @@
 .game-card:nth-child(1) { animation-delay: 0.1s; }
 .game-card:nth-child(2) { animation-delay: 0.2s; }
 .game-card:nth-child(3) { animation-delay: 0.3s; }
+
+/* Performance optimization for 1000 kitties */
+@media (prefers-reduced-motion: reduce) {
+    .kitty-army::before,
+    .kitty-army::after {
+        animation: none;
+    }
+}
+
+/* Additional kitty variations for more diversity */
+.kitty-army .kitty-variations {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: 
+        url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 35 35"><circle cx="17.5" cy="17.5" r="12" fill="%23fbbf24" opacity="0.25"/><circle cx="14" cy="15" r="2.5" fill="%23000" opacity="0.5"/><circle cx="21" cy="15" r="2.5" fill="%23000" opacity="0.5"/><circle cx="17.5" cy="19" r="1.8" fill="%23f59e0b" opacity="0.6"/><polygon points="17.5,21 15.5,24 19.5,24" fill="%23f59e0b" opacity="0.6"/></svg>'),
+        url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 35 35"><circle cx="17.5" cy="17.5" r="12" fill="%23a78bfa" opacity="0.25"/><circle cx="14" cy="15" r="2.5" fill="%23000" opacity="0.5"/><circle cx="21" cy="15" r="2.5" fill="%23000" opacity="0.5"/><circle cx="17.5" cy="19" r="1.8" fill="%238b5cf6" opacity="0.6"/><polygon points="17.5,21 15.5,24 19.5,24" fill="%238b5cf6" opacity="0.6"/></svg>'),
+        url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 35 35"><circle cx="17.5" cy="17.5" r="12" fill="%23fb7185" opacity="0.25"/><circle cx="14" cy="15" r="2.5" fill="%23000" opacity="0.5"/><circle cx="21" cy="15" r="2.5" fill="%23000" opacity="0.5"/><circle cx="17.5" cy="19" r="1.8" fill="%23f43f5e" opacity="0.6"/><polygon points="17.5,21 15.5,24 19.5,24" fill="%23f43f5e" opacity="0.6"/></svg>');
+    background-size: 35px 35px;
+    background-repeat: repeat;
+    background-position: 17px 17px;
+    animation: kittyArmyMove 30s linear infinite;
+    opacity: 0.2;
+}
+
+/* Rainbow Animations for Games */
+@keyframes rainbowShift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+@keyframes rainbowPulse {
+    0%, 100% { 
+        filter: hue-rotate(0deg) brightness(1);
+        transform: scale(1);
+    }
+    50% { 
+        filter: hue-rotate(180deg) brightness(1.2);
+        transform: scale(1.05);
+    }
+}
+
+@keyframes colorWave {
+    0% { 
+        background-position: 0% 50%;
+        filter: hue-rotate(0deg);
+    }
+    25% { 
+        background-position: 50% 50%;
+        filter: hue-rotate(90deg);
+    }
+    50% { 
+        background-position: 100% 50%;
+        filter: hue-rotate(180deg);
+    }
+    75% { 
+        background-position: 50% 50%;
+        filter: hue-rotate(270deg);
+    }
+    100% { 
+        background-position: 0% 50%;
+        filter: hue-rotate(360deg);
+    }
+}
+
+/* Enhanced game card animations */
+.game-card:nth-child(1) {
+    animation-delay: 0.1s;
+    border-color: rgba(255, 107, 107, 0.4);
+}
+
+.game-card:nth-child(2) {
+    animation-delay: 0.2s;
+    border-color: rgba(72, 219, 251, 0.4);
+}
+
+.game-card:nth-child(3) {
+    animation-delay: 0.3s;
+    border-color: rgba(255, 159, 243, 0.4);
+}
+
+
+/* Enhanced game icon animations */
+.game-icon {
+    font-size: 4rem;
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    opacity: 0.4;
+    transition: all 0.3s ease;
+    filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.5));
+}
+
+.game-card:hover .game-icon {
+    animation: rainbowPulse 2s ease-in-out infinite;
+    opacity: 0.8;
+    transform: scale(1.2) rotate(10deg);
+}
+
+/* Colorful screenshot placeholders */
+.screenshot-placeholder {
+    width: 120px;
+    height: 120px;
+    background: linear-gradient(135deg, 
+        rgba(255, 255, 255, 0.3), 
+        rgba(255, 107, 107, 0.2), 
+        rgba(72, 219, 251, 0.2));
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 3rem;
+    backdrop-filter: blur(15px);
+    border: 3px solid rgba(255, 255, 255, 0.5);
+    box-shadow: 
+        0 0 20px rgba(255, 107, 107, 0.3),
+        inset 0 0 20px rgba(255, 255, 255, 0.2);
+    transition: all 0.3s ease;
+}
+
+.game-card:hover .screenshot-placeholder {
+    transform: scale(1.1) rotate(5deg);
+    box-shadow: 
+        0 0 30px rgba(255, 107, 107, 0.5),
+        0 0 60px rgba(72, 219, 251, 0.3),
+        inset 0 0 30px rgba(255, 255, 255, 0.3);
+    animation: rainbowPulse 1s ease-in-out infinite;
+}
