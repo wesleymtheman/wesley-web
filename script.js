@@ -40,15 +40,17 @@ function initNavigation() {
     });
     
     // Header background on scroll
-    window.addEventListener('scroll', function() {
-        if (window.scrollY > 100) {
-            nav.style.background = 'rgba(255, 255, 255, 0.98)';
-            nav.style.boxShadow = '0 2px 20px rgba(0, 0, 0, 0.1)';
-        } else {
-            nav.style.background = 'rgba(255, 255, 255, 0.95)';
-            nav.style.boxShadow = 'none';
-        }
-    });
+    if (nav) {
+        window.addEventListener('scroll', function() {
+            if (window.scrollY > 100) {
+                nav.style.background = 'rgba(255, 255, 255, 0.98)';
+                nav.style.boxShadow = '0 2px 20px rgba(0, 0, 0, 0.1)';
+            } else {
+                nav.style.background = 'rgba(255, 255, 255, 0.95)';
+                nav.style.boxShadow = 'none';
+            }
+        });
+    }
 }
 
 // Hero section animations and interactions
@@ -56,36 +58,44 @@ function initHeroAnimations() {
     const exploreBtn = document.getElementById('exploreBtn');
     const learnMoreBtn = document.getElementById('learnMoreBtn');
     const floatingCards = document.querySelectorAll('.floating-card');
+
+    // Game pages also load this script — skip hero wiring when absent
+    if (!exploreBtn && !learnMoreBtn) return;
     
     // Explore button functionality
-    exploreBtn.addEventListener('click', function() {
-        // Navigate to games page
-        window.location.href = 'games/index.html';
-        
-        // Add click animation
-        this.style.transform = 'scale(0.95)';
-        setTimeout(() => {
-            this.style.transform = 'scale(1)';
-        }, 150);
-    });
+    if (exploreBtn) {
+        exploreBtn.addEventListener('click', function() {
+            // Navigate to games page
+            window.location.href = 'games/index.html';
+            
+            // Add click animation
+            this.style.transform = 'scale(0.95)';
+            setTimeout(() => {
+                this.style.transform = 'scale(1)';
+            }, 150);
+        });
+    }
     
     // Learn more button functionality
-    learnMoreBtn.addEventListener('click', function() {
-        const lieDetectorSection = document.querySelector('#lie-detector');
-        const headerHeight = document.querySelector('.header').offsetHeight;
-        const targetPosition = lieDetectorSection.offsetTop - headerHeight;
-        
-        window.scrollTo({
-            top: targetPosition,
-            behavior: 'smooth'
+    if (learnMoreBtn) {
+        learnMoreBtn.addEventListener('click', function() {
+            const aboutSection = document.querySelector('#about') || document.querySelector('#lie-detector');
+            if (!aboutSection) return;
+            const headerHeight = document.querySelector('.header').offsetHeight;
+            const targetPosition = aboutSection.offsetTop - headerHeight;
+            
+            window.scrollTo({
+                top: targetPosition,
+                behavior: 'smooth'
+            });
+            
+            // Add click animation
+            this.style.transform = 'scale(0.95)';
+            setTimeout(() => {
+                this.style.transform = 'scale(1)';
+            }, 150);
         });
-        
-        // Add click animation
-        this.style.transform = 'scale(0.95)';
-        setTimeout(() => {
-            this.style.transform = 'scale(1)';
-        }, 150);
-    });
+    }
     
     // Interactive floating cards
     floatingCards.forEach((card, index) => {
@@ -122,6 +132,8 @@ function initLieDetector() {
     const detectorStatus = document.getElementById('detectorStatus');
     const soundToggle = document.getElementById('soundToggle');
     const volumeSlider = document.getElementById('volumeSlider');
+
+    if (!detectBtn || !detectorDisplay) return;
     
     let isDetecting = false;
     let detectionCount = 0;

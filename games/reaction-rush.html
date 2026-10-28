@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Reaction Rush - Test your reflexes">
+    <title>Reaction Rush - WesleyDude.com</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="reaction-rush.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header class="header">
+        <nav class="nav">
+            <div class="nav-brand">
+                <h1><a href="../index.html" style="text-decoration: none; color: inherit;">WesleyDude.com</a></h1>
+            </div>
+            <ul class="nav-links">
+                <li><a href="../index.html">Home</a></li>
+                <li><a href="../index.html#lie-detector">Lie Detector</a></li>
+                <li><a href="index.html" class="active">Games</a></li>
+            </ul>
+            <button class="nav-toggle" aria-label="Toggle navigation">
+                <span></span><span></span><span></span>
+            </button>
+        </nav>
+    </header>
+
+    <main class="game-main">
+        <div class="game-container">
+            <div class="game-header">
+                <div class="game-title">
+                    <h1>⚡ Reaction Rush</h1>
+                    <p>Wait for green, then click as fast as you can!</p>
+                </div>
+                <div class="game-stats">
+                    <div class="stat"><span class="stat-label">Last</span><span class="stat-value" id="last">—</span></div>
+                    <div class="stat"><span class="stat-label">Best</span><span class="stat-value" id="best">—</span></div>
+                    <div class="stat"><span class="stat-label">Tries</span><span class="stat-value" id="tries">0</span></div>
+                </div>
+            </div>
+
+            <button type="button" class="reaction-pad waiting" id="reactionPad">
+                <span id="padText">Click to start</span>
+            </button>
+
+            <div class="game-controls">
+                <button class="btn btn-outline" id="backBtn">Back to Games</button>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2026 WesleyDude.com. Built with ❤️ by Wesley.</p>
+        </div>
+    </footer>
+
+    <script src="../script.js"></script>
+    <script src="reaction-rush.js"></script>
+</body>
+</html>
