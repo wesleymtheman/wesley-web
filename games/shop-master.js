@@ -40,8 +40,12 @@ class ShopMaster {
             angry: 0
         };
         this.robberyChance = 0.1; // 10% chance per night hour
+        this.daySales = 0;
         this.startDayHandler = () => this.startDay();
         this.endDayHandler = null;
+        this.customerTimer = null;
+        this.dayTimer = null;
+        this.timeProgressionTimer = null;
         
         this.products = {
             laptop: { 
@@ -270,93 +274,115 @@ class ShopMaster {
         document.getElementById(`${tabName}-tab`).classList.add('active');
     }
     
+    clearAllTimers() {
+        clearInterval(this.customerTimer);
+        clearInterval(this.dayTimer);
+        clearInterval(this.timeProgressionTimer);
+        this.customerTimer = null;
+        this.dayTimer = null;
+        this.timeProgressionTimer = null;
+    }
+
     startDay() {
-        if (this.gameState === 'waiting') {
-            this.gameState = 'playing';
-            this.timeOfDay = 'morning';
-            this.timeProgress = 0;
-            this.startCustomerArrivals();
-            this.startDayTimer();
-            this.startTimeProgression();
-            this.showMessage('Day started! Customers are coming! 👥', 'info');
-            
-            const startBtn = document.getElementById('startBtn');
-            startBtn.textContent = 'End Day';
-            startBtn.removeEventListener('click', this.startDayHandler);
-            this.endDayHandler = () => this.endDay();
-            startBtn.addEventListener('click', this.endDayHandler);
-        }
+        if (this.gameState !== 'waiting') return;
+
+        this.clearAllTimers();
+        this.gameState = 'playing';
+        this.timeOfDay = 'morning';
+        this.timeProgress = 0;
+        this.daySales = 0;
+        this.startCustomerArrivals();
+        this.startDayTimer();
+        this.startTimeProgression();
+        this.showMessage('Day started! Customers are coming! 👥', 'info');
+
+        const startBtn = document.getElementById('startBtn');
+        startBtn.textContent = 'End Day';
+        startBtn.removeEventListener('click', this.startDayHandler);
+        startBtn.removeEventListener('click', this.endDayHandler);
+        this.endDayHandler = () => this.endDay();
+        startBtn.addEventListener('click', this.endDayHandler);
+
+        const pauseBtn = document.getElementById('pauseBtn');
+        pauseBtn.textContent = 'Pause';
+        pauseBtn.onclick = () => this.pauseGame();
     }
     
     endDay() {
-        if (this.gameState === 'playing') {
-            this.gameState = 'waiting';
-            clearInterval(this.customerTimer);
-            clearInterval(this.dayTimer);
-            clearInterval(this.timeProgressionTimer);
+        if (this.gameState !== 'playing' && this.gameState !== 'paused') return;
+
+        this.gameState = 'waiting';
+        this.clearAllTimers();
             
-            // Clear remaining customers
-            this.currentCustomers.forEach(customer => {
-                if (customer.element && customer.element.parentNode) {
-                    customer.element.parentNode.removeChild(customer.element);
-                }
-            });
-            this.currentCustomers = [];
-            this.servingCustomers = [];
+        // Clear remaining customers
+        this.currentCustomers.forEach(customer => {
+            if (customer.element && customer.element.parentNode) {
+                customer.element.parentNode.removeChild(customer.element);
+            }
+        });
+        this.currentCustomers = [];
+        this.servingCustomers = [];
             
-            // Calculate day results
-            const dayProfit = this.calculateDayProfit();
-            this.money += dayProfit;
+        const dayProfit = this.daySales || 0;
+        this.day++;
+        this.timeProgress = 0;
+        this.timeOfDay = 'morning';
+        this.updateDisplay();
             
-            this.day++;
-            this.updateDisplay();
+        this.showMessage(`Day ${this.day - 1} complete! Sales: $${dayProfit} 💰`, 'success');
             
-            this.showMessage(`Day ${this.day - 1} complete! Profit: $${dayProfit} 💰`, 'success');
-            
-            const startBtn = document.getElementById('startBtn');
-            startBtn.textContent = 'Start Day';
-            startBtn.removeEventListener('click', this.endDayHandler);
-            this.startDayHandler = () => this.startDay();
-            startBtn.addEventListener('click', this.startDayHandler);
-        }
+        const startBtn = document.getElementById('startBtn');
+        startBtn.textContent = 'Start Day';
+        startBtn.removeEventListener('click', this.endDayHandler);
+        startBtn.removeEventListener('click', this.startDayHandler);
+        this.startDayHandler = () => this.startDay();
+        startBtn.addEventListener('click', this.startDayHandler);
+
+        const pauseBtn = document.getElementById('pauseBtn');
+        pauseBtn.textContent = 'Pause';
+        pauseBtn.onclick = () => this.pauseGame();
     }
     
     pauseGame() {
-        if (this.gameState === 'playing') {
-            this.gameState = 'paused';
-            clearInterval(this.customerTimer);
-            clearInterval(this.dayTimer);
-            this.showMessage('Game Paused', 'info');
-            document.getElementById('pauseBtn').textContent = 'Resume';
-            document.getElementById('pauseBtn').onclick = () => this.resumeGame();
-        }
+        if (this.gameState !== 'playing') return;
+
+        this.gameState = 'paused';
+        this.clearAllTimers();
+        this.showMessage('Game Paused', 'info');
+        document.getElementById('pauseBtn').textContent = 'Resume';
+        document.getElementById('pauseBtn').onclick = () => this.resumeGame();
     }
     
     resumeGame() {
-        if (this.gameState === 'paused') {
-            this.gameState = 'playing';
-            this.startCustomerArrivals();
-            this.startDayTimer();
-            this.showMessage('Game Resumed!', 'info');
-            document.getElementById('pauseBtn').textContent = 'Pause';
-            document.getElementById('pauseBtn').onclick = () => this.pauseGame();
-        }
+        if (this.gameState !== 'paused') return;
+
+        this.gameState = 'playing';
+        this.startCustomerArrivals();
+        this.startDayTimer();
+        this.startTimeProgression();
+        this.showMessage('Game Resumed!', 'info');
+        document.getElementById('pauseBtn').textContent = 'Pause';
+        document.getElementById('pauseBtn').onclick = () => this.pauseGame();
     }
     
     startCustomerArrivals() {
+        clearInterval(this.customerTimer);
         const arrivalRate = this.upgrades.advertising ? 1500 : 2000;
         
         this.customerTimer = setInterval(() => {
-            if (this.currentCustomers.length < 5) { // Max 5 customers in queue
+            if (this.gameState !== 'playing') return;
+            if (this.currentCustomers.length < 5) {
                 this.spawnCustomer();
             }
         }, arrivalRate);
     }
     
     startDayTimer() {
+        clearInterval(this.dayTimer);
         this.dayTimer = setInterval(() => {
-            // Reduce customer patience over time
-            this.currentCustomers.forEach(customer => {
+            if (this.gameState !== 'playing') return;
+            // Copy list — leaving mutates currentCustomers
+            [...this.currentCustomers].forEach(customer => {
                 customer.patience--;
                 if (customer.patience <= 0) {
                     this.customerLeave(customer, 'angry');
@@ -406,10 +432,12 @@ class ShopMaster {
     }
     
     startTimeProgression() {
+        clearInterval(this.timeProgressionTimer);
         this.timeProgressionTimer = setInterval(() => {
+            if (this.gameState !== 'playing') return;
+
             this.timeProgress += 1;
             
-            // Update time of day based on progress
             if (this.timeProgress <= 25) {
                 this.timeOfDay = 'morning';
             } else if (this.timeProgress <= 50) {
@@ -418,8 +446,6 @@ class ShopMaster {
                 this.timeOfDay = 'evening';
             } else {
                 this.timeOfDay = 'night';
-                
-                // Check for robbery during night
                 if (Math.random() < this.robberyChance) {
                     this.handleRobbery();
                 }
@@ -427,11 +453,10 @@ class ShopMaster {
             
             this.updateDisplay();
             
-            // End day at 100%
             if (this.timeProgress >= 100) {
                 this.endDay();
             }
-        }, 2000); // Progress every 2 seconds
+        }, 2000);
     }
     
     handleRobbery() {
@@ -458,23 +483,33 @@ class ShopMaster {
     }
     
     serveCustomer(customerElement) {
-        const customerId = parseInt(customerElement.dataset.customerId);
+        if (this.gameState !== 'playing') return;
+
+        const customerId = parseInt(customerElement.dataset.customerId, 10);
         const customer = this.currentCustomers.find(c => c.id === customerId);
-        
+        if (!customer) return;
+
+        this.tryServeCustomer(customer);
+    }
+    
+    serveNextCustomer() {
+        if (this.gameState !== 'playing' || this.currentCustomers.length === 0) return;
+        this.tryServeCustomer(this.currentCustomers[0]);
+    }
+
+    tryServeCustomer(customer) {
         if (!customer || !customer.wants) {
             this.showMessage('Customer wants something we don\'t have! 😞', 'error');
             this.customerLeave(customer, 'angry');
             return;
         }
         
-        // Check if we have the specific item the customer wants
         if (!this.inventory[customer.wants] || this.inventory[customer.wants] <= 0) {
             this.showMessage(`Out of ${this.products[customer.wants].name}! Customer is disappointed 😞`, 'error');
             this.customerLeave(customer, 'angry');
             return;
         }
         
-        // Check if customer has enough money
         const product = this.products[customer.wants];
         if (customer.money < product.sellPrice) {
             this.showMessage('Customer can\'t afford it! 💸', 'error');
@@ -482,45 +517,27 @@ class ShopMaster {
             return;
         }
         
-        // Serve the customer
-        this.serveNextCustomer();
-    }
-    
-    serveNextCustomer() {
-        if (this.currentCustomers.length === 0) return;
-        
-        const customer = this.currentCustomers[0];
-        if (!customer.wants || !this.inventory[customer.wants] || this.inventory[customer.wants] <= 0) {
-            this.customerLeave(customer, 'angry');
-            return;
-        }
-        
-        // Sell the specific product the customer wants
-        const product = this.products[customer.wants];
-        const profit = product.sellPrice - product.cost;
-        
         this.money += product.sellPrice;
+        this.daySales += product.sellPrice;
         this.inventory[customer.wants]--;
-        
-        // Remove customer
         this.customerLeave(customer, 'happy');
-        
-        // Show profit
         this.showMoneyEarned(product.sellPrice);
-        
         this.updateDisplay();
         this.updateInventoryDisplay();
     }
     
     customerLeave(customer, mood) {
+        if (!customer) return;
+
         if (customer.element && customer.element.parentNode) {
             customer.element.parentNode.removeChild(customer.element);
         }
         
         this.currentCustomers = this.currentCustomers.filter(c => c.id !== customer.id);
-        this.customerStats[mood]++;
+        if (this.customerStats[mood] !== undefined) {
+            this.customerStats[mood]++;
+        }
         
-        // Update reputation based on customer satisfaction
         if (mood === 'happy') {
             this.reputation += 2;
         } else if (mood === 'angry') {
@@ -585,21 +602,6 @@ class ShopMaster {
         this.updateUpgradeButtons();
     }
     
-    calculateDayProfit() {
-        let profit = 0;
-        Object.keys(this.inventory).forEach(product => {
-            const sold = this.getInitialInventory(product) - (this.inventory[product] || 0);
-            const productProfit = (this.products[product].sellPrice - this.products[product].cost) * sold;
-            profit += productProfit;
-        });
-        return profit;
-    }
-    
-    getInitialInventory(product) {
-        // This would track initial inventory for the day
-        return this.inventory[product] || 0;
-    }
-    
     updateDisplay() {
         document.getElementById('money').textContent = `$${this.money}`;
         document.getElementById('day').textContent = this.day;
@@ -619,30 +621,23 @@ class ShopMaster {
     }
     
     updateInventoryDisplay() {
-        Object.keys(this.products).forEach(productName => {
-            const product = this.products[productName];
-            const category = product.category;
+        const categories = ['electronics', 'clothing', 'food'];
+        categories.forEach(category => {
             const container = document.getElementById(category);
-            
-            // Clear existing products
+            if (!container) return;
             container.innerHTML = '';
-            
-            // Add product slots
-            const maxSlots = this.upgrades.storage ? 8 : 5;
-            for (let i = 0; i < maxSlots; i++) {
-                const slot = document.createElement('div');
-                slot.className = 'product-slot';
-                
-                if (i < (this.inventory[productName] || 0)) {
-                    slot.textContent = product.icon;
-                    slot.title = `${product.name} (${this.inventory[productName]})`;
-                } else {
-                    slot.textContent = 'Empty';
-                    slot.classList.add('empty');
-                }
-                
-                container.appendChild(slot);
-            }
+
+            Object.keys(this.products)
+                .filter(name => this.products[name].category === category)
+                .forEach(productName => {
+                    const product = this.products[productName];
+                    const count = this.inventory[productName] || 0;
+                    const slot = document.createElement('div');
+                    slot.className = 'product-slot' + (count <= 0 ? ' empty' : '');
+                    slot.textContent = count > 0 ? `${product.icon}×${count}` : product.icon;
+                    slot.title = `${product.name}: ${count} in stock`;
+                    container.appendChild(slot);
+                });
         });
     }
     

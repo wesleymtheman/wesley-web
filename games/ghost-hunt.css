@@ -1,0 +1,313 @@
+/* Ghost Hunt — spooky arcade styles */
+/* WesleyDude.com */
+
+.spooky-page {
+    background: radial-gradient(ellipse at top, #1a0a2e 0%, #0a0612 55%, #050308 100%);
+}
+
+.spooky-page .game-main {
+    min-height: calc(100vh - 140px);
+    padding: 2rem 1rem 3rem;
+}
+
+.spooky-page .game-container {
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.spooky-page .game-header {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+.spooky-page .game-title h1 {
+    font-size: 2.25rem;
+    margin: 0 0 0.35rem;
+    background: linear-gradient(90deg, #ff6b00, #ffb347, #c77dff, #ff6b00);
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: spookyGlow 4s ease-in-out infinite;
+}
+
+.spooky-page .game-title p {
+    color: #b8a0c8;
+    margin: 0;
+}
+
+.spooky-page .game-stats {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+}
+
+.spooky-page .stat {
+    background: rgba(40, 15, 55, 0.85);
+    border: 1px solid rgba(255, 140, 0, 0.35);
+    border-radius: 10px;
+    padding: 0.65rem 1rem;
+    min-width: 88px;
+    text-align: center;
+    box-shadow: 0 0 16px rgba(255, 100, 0, 0.12);
+}
+
+.spooky-page .stat-label {
+    display: block;
+    font-size: 0.75rem;
+    color: #c9a0ff;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.spooky-page .stat-value {
+    display: block;
+    font-size: 1.35rem;
+    font-weight: 700;
+    color: #ff9f43;
+}
+
+.game-board-container {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    margin: 1.5rem 0;
+}
+
+#gameCanvas {
+    border: 3px solid rgba(255, 120, 0, 0.45);
+    border-radius: 14px;
+    background: #0d0818;
+    box-shadow:
+        0 8px 40px rgba(0, 0, 0, 0.6),
+        0 0 28px rgba(180, 60, 255, 0.25),
+        inset 0 0 40px rgba(255, 100, 0, 0.05);
+    max-width: 100%;
+    height: auto;
+    cursor: crosshair;
+}
+
+.game-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(160deg, rgba(20, 8, 30, 0.96), rgba(8, 4, 16, 0.97));
+    backdrop-filter: blur(12px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 14px;
+    transition: opacity 0.3s ease;
+    border: 2px solid rgba(255, 120, 0, 0.3);
+}
+
+.game-overlay.hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.overlay-content {
+    text-align: center;
+    color: white;
+    padding: 2rem;
+}
+
+.overlay-content h2 {
+    font-size: 2.4rem;
+    margin-bottom: 0.75rem;
+    background: linear-gradient(90deg, #ff6b00, #ffd166, #c77dff);
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: spookyGlow 3s ease-in-out infinite;
+}
+
+.overlay-content p {
+    font-size: 1.15rem;
+    margin-bottom: 1.5rem;
+    color: #cbb8d8;
+}
+
+.controls-info h3 {
+    color: #ff9f43;
+    margin-bottom: 1rem;
+}
+
+.control-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.85rem;
+    max-width: 200px;
+    margin: 0 auto;
+}
+
+.control-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.4rem;
+}
+
+.key {
+    background: linear-gradient(135deg, #2a1538, #3d1f50);
+    color: #ffd166;
+    padding: 0.45rem 0.9rem;
+    border-radius: 8px;
+    font-weight: bold;
+    font-size: 1.05rem;
+    min-width: 40px;
+    border: 2px solid rgba(255, 140, 0, 0.4);
+    box-shadow: 0 0 12px rgba(255, 100, 0, 0.2);
+}
+
+.action {
+    font-size: 0.85rem;
+    color: #b8a0c8;
+}
+
+.spooky-page .game-controls {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.75rem;
+    margin-top: 0.5rem;
+}
+
+.game-messages {
+    margin-top: 1rem;
+    text-align: center;
+}
+
+.message {
+    background: #2a1538;
+    color: white;
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+    margin: 0.5rem auto;
+    max-width: 420px;
+    opacity: 0;
+    transform: translateY(-10px);
+    transition: all 0.3s ease;
+    border: 1px solid rgba(255, 140, 0, 0.3);
+}
+
+.message.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.message.success {
+    background: #3d2a08;
+    border-color: #ff9f43;
+}
+
+.message.error {
+    background: #3a1020;
+    border-color: #ff4757;
+}
+
+.message.info {
+    background: #1a1030;
+    border-color: #c77dff;
+}
+
+.instructions-modal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(5, 2, 10, 0.85);
+    z-index: 1000;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+}
+
+.instructions-modal.show {
+    display: flex;
+}
+
+.modal-content {
+    background: linear-gradient(160deg, #1c0f2a, #12081c);
+    border: 1px solid rgba(255, 140, 0, 0.4);
+    border-radius: 16px;
+    max-width: 560px;
+    width: 100%;
+    max-height: 85vh;
+    overflow-y: auto;
+    box-shadow: 0 0 40px rgba(180, 60, 255, 0.25);
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.25rem 1.5rem;
+    border-bottom: 1px solid rgba(255, 140, 0, 0.25);
+}
+
+.modal-header h2 {
+    margin: 0;
+    color: #ff9f43;
+    font-size: 1.35rem;
+}
+
+.close-btn {
+    background: transparent;
+    border: none;
+    color: #cbb8d8;
+    font-size: 1.75rem;
+    cursor: pointer;
+    line-height: 1;
+}
+
+.close-btn:hover {
+    color: #ff6b00;
+}
+
+.modal-body {
+    padding: 1.5rem;
+    color: #d8c8e8;
+}
+
+.instruction-section {
+    margin-bottom: 1.35rem;
+}
+
+.instruction-section h3 {
+    color: #c77dff;
+    margin: 0 0 0.5rem;
+}
+
+.instruction-section p,
+.instruction-section li {
+    line-height: 1.55;
+}
+
+.instruction-section ol,
+.instruction-section ul {
+    margin: 0.4rem 0 0;
+    padding-left: 1.25rem;
+}
+
+@keyframes spookyGlow {
+    0%, 100% { background-position: 0% center; }
+    50% { background-position: 100% center; }
+}
+
+@media (max-width: 768px) {
+    .spooky-page .game-title h1 {
+        font-size: 1.75rem;
+    }
+
+    .overlay-content h2 {
+        font-size: 1.75rem;
+    }
+
+    .spooky-page .game-controls .btn {
+        flex: 1 1 40%;
+    }
+}

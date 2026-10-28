@@ -1,0 +1,200 @@
+/* Shared layout for all game pages */
+/* WesleyDude.com */
+
+.nav-brand a {
+    text-decoration: none;
+    color: inherit;
+}
+
+.nav-links .active {
+    color: var(--primary-color, #667eea);
+    font-weight: 600;
+}
+
+.game-main {
+    padding: 5.5rem 1rem 3rem;
+    min-height: calc(100vh - 80px);
+    background: var(--bg-secondary, #f5f5f7);
+}
+
+.game-container {
+    max-width: 960px;
+    margin: 0 auto;
+}
+
+.game-header {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 1.25rem;
+    background: #fff;
+    border-radius: 16px;
+    padding: 1.5rem 1.75rem;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+    border: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+.game-title h1 {
+    margin: 0 0 0.35rem;
+    font-size: clamp(1.6rem, 3vw, 2.1rem);
+    color: var(--text-primary, #1a1a2e);
+}
+
+.game-title p {
+    margin: 0;
+    color: var(--text-secondary, #666);
+    font-size: 1rem;
+}
+
+.game-stats {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.65rem;
+}
+
+.game-stats .stat {
+    text-align: center;
+    background: var(--bg-secondary, #f5f5f7);
+    padding: 0.65rem 1rem;
+    border-radius: 12px;
+    min-width: 76px;
+}
+
+.game-stats .stat-label {
+    display: block;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--text-secondary, #888);
+    margin-bottom: 0.2rem;
+}
+
+.game-stats .stat-value {
+    display: block;
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--primary-color, #667eea);
+}
+
+.game-controls {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.75rem;
+    margin-top: 1.25rem;
+}
+
+.game-messages {
+    margin-top: 1rem;
+    text-align: center;
+    min-height: 2.5rem;
+}
+
+.game-messages .message {
+    display: inline-block;
+    background: #333;
+    color: #fff;
+    padding: 0.65rem 1.25rem;
+    border-radius: 8px;
+    margin: 0.35rem auto;
+    opacity: 0;
+    transform: translateY(-8px);
+    transition: all 0.25s ease;
+}
+
+.game-messages .message.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.game-messages .message.success { background: #2e7d32; }
+.game-messages .message.error { background: #c62828; }
+.game-messages .message.info { background: #1565c0; }
+
+.instructions-modal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(10, 10, 20, 0.7);
+    z-index: 1000;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+}
+
+.instructions-modal.show {
+    display: flex;
+}
+
+.instructions-modal .modal-content {
+    background: #fff;
+    border-radius: 16px;
+    max-width: 560px;
+    width: 100%;
+    max-height: 85vh;
+    overflow-y: auto;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.25);
+}
+
+.instructions-modal .modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.15rem 1.4rem;
+    border-bottom: 1px solid #eee;
+}
+
+.instructions-modal .modal-header h2 {
+    margin: 0;
+    font-size: 1.25rem;
+}
+
+.instructions-modal .close-btn {
+    background: transparent;
+    border: none;
+    font-size: 1.75rem;
+    line-height: 1;
+    cursor: pointer;
+    color: #888;
+}
+
+.instructions-modal .close-btn:hover {
+    color: #333;
+}
+
+.instructions-modal .modal-body {
+    padding: 1.4rem;
+    color: #444;
+}
+
+.instructions-modal .instruction-section {
+    margin-bottom: 1.25rem;
+}
+
+.instructions-modal .instruction-section h3 {
+    margin: 0 0 0.45rem;
+    color: #222;
+}
+
+.instructions-modal .instruction-section p,
+.instructions-modal .instruction-section li {
+    line-height: 1.55;
+}
+
+.instructions-modal .instruction-section ol,
+.instructions-modal .instruction-section ul {
+    margin: 0.35rem 0 0;
+    padding-left: 1.2rem;
+}
+
+@media (max-width: 640px) {
+    .game-header {
+        padding: 1.15rem;
+    }
+
+    .game-controls .btn {
+        flex: 1 1 40%;
+    }
+}
