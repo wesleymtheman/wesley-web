@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Haunted Halls - First-person spooky escape - WesleyDude.com">
+    <title>Haunted Halls - WesleyDude.com</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="game-shell.css">
+    <link rel="stylesheet" href="mini-games.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header class="header">
+        <nav class="nav">
+            <div class="nav-brand"><h1><a href="../index.html">WesleyDude.com</a></h1></div>
+            <ul class="nav-links">
+                <li><a href="../index.html">Home</a></li>
+                <li><a href="../index.html#about">About</a></li>
+                <li><a href="index.html" class="active">Games</a></li>
+                <li><a href="educational.html">Educational</a></li>
+            </ul>
+            <button class="nav-toggle" aria-label="Toggle navigation"><span></span><span></span><span></span></button>
+        </nav>
+    </header>
+    <main class="game-main">
+        <div class="game-container">
+            <div class="game-header">
+                <div class="game-title">
+                    <h1>🕯️ Haunted Halls</h1>
+                    <p>First-person scare — find the exit before the shadow catches you.</p>
+                </div>
+                <div class="game-stats">
+                    <div class="stat"><span class="stat-label">Keys</span><span class="stat-value" id="keys">0/2</span></div>
+                    <div class="stat"><span class="stat-label">Fear</span><span class="stat-value" id="fear">0</span></div>
+                    <div class="stat"><span class="stat-label">Best</span><span class="stat-value" id="best">—</span></div>
+                    <div class="stat"><span class="stat-label">Time</span><span class="stat-value" id="time">0</span></div>
+                </div>
+            </div>
+            <div class="mini-play haunted-play" id="playArea">
+                <div class="haunted-wrap">
+                    <canvas id="gameCanvas" width="640" height="360"></canvas>
+                    <div class="haunted-vignette" id="vignette"></div>
+                    <div class="haunted-flash" id="jumpFlash" aria-hidden="true"></div>
+                    <div class="mystery-scare" id="mysteryScare" aria-hidden="true">
+                        <img class="cat-scare-photo" src="jumpscare-cat.jpg" alt="Cat jump scare" draggable="false">
+                    </div>
+                    <div class="haunted-overlay" id="overlay">
+                        <p>You wake up in a dark hallway…</p>
+                        <p class="haunted-hint">Click the view to look with your mouse · WASD move · find 2 keys · reach the door</p>
+                    </div>
+                </div>
+                <div class="haunted-touch" id="touchPad" aria-label="Touch controls">
+                    <button type="button" data-dir="left">◀</button>
+                    <button type="button" data-dir="forward">▲</button>
+                    <button type="button" data-dir="right">▶</button>
+                    <button type="button" data-dir="back">▼</button>
+                </div>
+                <p class="status" id="status">Press Start if you dare.</p>
+            </div>
+            <div class="game-controls">
+                <button class="btn btn-primary" id="actionBtn" type="button">Start</button>
+                <button class="btn btn-outline" id="backBtn" type="button">Back to Games</button>
+            </div>
+            <div class="game-messages" id="gameMessages"></div>
+        </div>
+    </main>
+    <footer class="footer"><div class="container"><p>&copy; 2026 WesleyDude.com. Built with ❤️ by Wesley.</p></div></footer>
+    <script src="../script.js"></script>
+    <script src="haunted-halls.js"></script>
+</body>
+</html>

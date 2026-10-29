@@ -3,12 +3,61 @@
 
 document.addEventListener('DOMContentLoaded', function() {
     // Initialize all functionality
+    initBirthdayBanner();
     initNavigation();
     initHeroAnimations();
     initLieDetector();
     initScrollAnimations();
     initMobileMenu();
 });
+
+function nextWesleyBirthday(from = new Date()) {
+    const year = from.getFullYear();
+    let next = new Date(year, 4, 29); // May 29
+    // After May 29, count down to next year's birthday
+    const startOfToday = new Date(year, from.getMonth(), from.getDate());
+    if (startOfToday > next) next = new Date(year + 1, 4, 29);
+    return next;
+}
+
+function daysUntilWesleyBirthday(from = new Date()) {
+    const today = new Date(from.getFullYear(), from.getMonth(), from.getDate());
+    const next = nextWesleyBirthday(from);
+    return Math.round((next - today) / 86400000);
+}
+
+// Every May 29 — Happy Birthday Wesley! Otherwise show days until May 29.
+function initBirthdayBanner() {
+    if (document.getElementById('birthdayBanner')) return;
+
+    const now = new Date();
+    const isBirthday = now.getMonth() === 4 && now.getDate() === 29;
+    const days = daysUntilWesleyBirthday(now);
+
+    const banner = document.createElement('div');
+    banner.id = 'birthdayBanner';
+    banner.className = 'birthday-banner' + (isBirthday ? '' : ' birthday-countdown');
+    banner.setAttribute('role', 'status');
+
+    if (isBirthday) {
+        banner.innerHTML = `
+            <span class="birthday-banner-sparkle" aria-hidden="true">🎂</span>
+            <span class="birthday-banner-text">Happy Birthday Wesley!</span>
+            <span class="birthday-banner-sparkle" aria-hidden="true">🎉</span>
+        `;
+        document.body.classList.add('birthday-today');
+    } else {
+        const dayWord = days === 1 ? 'day' : 'days';
+        banner.innerHTML = `
+            <span class="birthday-banner-sparkle" aria-hidden="true">🎂</span>
+            <span class="birthday-banner-text">${days} ${dayWord} until May 29 — Wesley’s birthday!</span>
+            <span class="birthday-banner-sparkle" aria-hidden="true">🎈</span>
+        `;
+        document.body.classList.add('birthday-countdown-on');
+    }
+
+    document.body.insertBefore(banner, document.body.firstChild);
+}
 
 // Navigation functionality
 function initNavigation() {
@@ -124,7 +173,7 @@ function initHeroAnimations() {
     });
 }
 
-// Lie Detector functionality
+// Lie Detector functionality — uses the real microphone
 function initLieDetector() {
     const detectBtn = document.getElementById('detectBtn');
     const detectorDisplay = document.getElementById('detectorDisplay');
@@ -132,180 +181,287 @@ function initLieDetector() {
     const detectorStatus = document.getElementById('detectorStatus');
     const soundToggle = document.getElementById('soundToggle');
     const volumeSlider = document.getElementById('volumeSlider');
+    const voiceMeter = document.getElementById('voiceMeter');
+    const voiceMeterFill = document.getElementById('voiceMeterFill');
+    const detectorScreen = document.querySelector('.detector-screen');
 
     if (!detectBtn || !detectorDisplay) return;
-    
+
     let isDetecting = false;
     let detectionCount = 0;
     let soundEnabled = true;
     let volume = 0.5;
-    
-    const responses = [
-        { text: "Truth Detected", color: "#10b981", needle: "45deg", sound: "truth" },
-        { text: "Lie Detected!", color: "#ef4444", needle: "135deg", sound: "lie" },
-        { text: "Inconclusive", color: "#f59e0b", needle: "90deg", sound: "inconclusive" },
-        { text: "Processing...", color: "#6366f1", needle: "0deg", sound: "processing" },
-        { text: "Signal Weak", color: "#8b5cf6", needle: "180deg", sound: "weak" },
-        { text: "Truth!", color: "#10b981", needle: "30deg", sound: "truth" },
-        { text: "Definitely Lying", color: "#ef4444", needle: "150deg", sound: "lie" },
-        { text: "Honest Answer", color: "#10b981", needle: "60deg", sound: "truth" }
+    let audioContext = null;
+    let micStream = null;
+    let analyser = null;
+    let meterRaf = null;
+
+    const truthResults = [
+        { text: 'Truth Detected', color: '#10b981', needle: '45deg' },
+        { text: 'Truth!', color: '#10b981', needle: '30deg' },
+        { text: 'Honest Answer', color: '#10b981', needle: '60deg' }
     ];
-    
-    // Create audio context for sound effects
-    let audioContext;
-    let sounds = {};
-    
-    function initAudio() {
-        try {
+    const lieResults = [
+        { text: 'Lie Detected!', color: '#ef4444', needle: '135deg' },
+        { text: 'Definitely Lying', color: '#ef4444', needle: '150deg' }
+    ];
+    const weakResult = { text: 'Signal Weak — speak louder', color: '#8b5cf6', needle: '180deg' };
+    const inconclusiveResult = { text: 'Inconclusive', color: '#f59e0b', needle: '90deg' };
+
+    function ensureAudioContext() {
+        if (!audioContext) {
             audioContext = new (window.AudioContext || window.webkitAudioContext)();
-            createSounds();
-        } catch (e) {
-            console.log('Audio not supported');
         }
+        if (audioContext.state === 'suspended') {
+            return audioContext.resume();
+        }
+        return Promise.resolve();
     }
-    
-    function createSounds() {
-        // Create different sound effects using Web Audio API
-        sounds.processing = () => createBeepSound(800, 0.1, 'sine');
-        sounds.truth = () => createBeepSound(600, 0.3, 'sine');
-        sounds.lie = () => createBeepSound(300, 0.4, 'sawtooth');
-        sounds.inconclusive = () => createBeepSound(500, 0.2, 'triangle');
-        sounds.weak = () => createBeepSound(400, 0.15, 'square');
-    }
-    
+
     function createBeepSound(frequency, duration, waveType) {
         if (!audioContext || !soundEnabled) return;
-        
+
         const oscillator = audioContext.createOscillator();
         const gainNode = audioContext.createGain();
-        
+
         oscillator.connect(gainNode);
         gainNode.connect(audioContext.destination);
-        
+
         oscillator.frequency.setValueAtTime(frequency, audioContext.currentTime);
         oscillator.type = waveType;
-        
-        gainNode.gain.setValueAtTime(volume * 0.1, audioContext.currentTime);
+
+        gainNode.gain.setValueAtTime(Math.max(volume * 0.1, 0.001), audioContext.currentTime);
         gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + duration);
-        
+
         oscillator.start(audioContext.currentTime);
         oscillator.stop(audioContext.currentTime + duration);
     }
-    
-    function playSound(soundType) {
-        if (sounds[soundType]) {
-            sounds[soundType]();
-            // Trigger visual sound effect
-            triggerSoundEffect();
-        }
-    }
-    
+
     function triggerSoundEffect() {
-        const screen = document.querySelector('.detector-screen');
-        if (screen) {
-            screen.classList.add('sound-active');
-            setTimeout(() => {
-                screen.classList.remove('sound-active');
-            }, 800);
-        }
+        if (!detectorScreen) return;
+        detectorScreen.classList.add('sound-active');
+        setTimeout(() => detectorScreen.classList.remove('sound-active'), 800);
     }
-    
+
     function playStartupSound() {
         if (!audioContext || !soundEnabled) return;
-        
-        // Play a startup sequence
         setTimeout(() => createBeepSound(400, 0.1, 'sine'), 0);
         setTimeout(() => createBeepSound(600, 0.1, 'sine'), 100);
         setTimeout(() => createBeepSound(800, 0.2, 'sine'), 200);
     }
-    
+
     function playResultSound(result) {
-        if (!soundEnabled) return;
-        
-        // Play different sounds based on result
-        if (result.text.includes('Truth')) {
-            // Pleasant ascending tones for truth
-            setTimeout(() => createBeepSound(523, 0.2, 'sine'), 0); // C5
-            setTimeout(() => createBeepSound(659, 0.2, 'sine'), 150); // E5
-            setTimeout(() => createBeepSound(784, 0.3, 'sine'), 300); // G5
-        } else if (result.text.includes('Lie')) {
-            // Harsh descending tones for lies
+        if (!soundEnabled || !audioContext) return;
+        triggerSoundEffect();
+
+        if (result.text.includes('Truth') || result.text.includes('Honest')) {
+            setTimeout(() => createBeepSound(523, 0.2, 'sine'), 0);
+            setTimeout(() => createBeepSound(659, 0.2, 'sine'), 150);
+            setTimeout(() => createBeepSound(784, 0.3, 'sine'), 300);
+        } else if (result.text.includes('Lie') || result.text.includes('Lying')) {
             setTimeout(() => createBeepSound(400, 0.3, 'sawtooth'), 0);
             setTimeout(() => createBeepSound(300, 0.3, 'sawtooth'), 200);
             setTimeout(() => createBeepSound(200, 0.4, 'sawtooth'), 400);
         } else if (result.text.includes('Inconclusive')) {
-            // Neutral tone
             createBeepSound(500, 0.4, 'triangle');
-        } else if (result.text.includes('Weak')) {
-            // Weak, fading tone
+        } else {
             createBeepSound(350, 0.6, 'sine');
         }
     }
-    
-    // Sound toggle functionality
-    soundToggle.addEventListener('click', function() {
-        soundEnabled = !soundEnabled;
-        this.textContent = soundEnabled ? '🔊 Sound On' : '🔇 Sound Off';
-        this.style.background = soundEnabled ? 
-            'linear-gradient(135deg, rgba(255, 107, 107, 0.2), rgba(72, 219, 251, 0.2), rgba(255, 159, 243, 0.2))' :
-            'linear-gradient(135deg, rgba(107, 114, 128, 0.2), rgba(75, 85, 99, 0.2))';
-    });
-    
-    // Volume control functionality
-    volumeSlider.addEventListener('input', function() {
-        volume = this.value / 100;
-    });
-    
-    detectBtn.addEventListener('click', function() {
-        if (isDetecting) return;
-        
-        // Initialize audio on first click (user interaction required)
-        if (!audioContext) {
-            initAudio();
+
+    function stopMic() {
+        if (meterRaf) {
+            cancelAnimationFrame(meterRaf);
+            meterRaf = null;
         }
-        
+        if (micStream) {
+            micStream.getTracks().forEach((track) => track.stop());
+            micStream = null;
+        }
+        analyser = null;
+        if (voiceMeter) voiceMeter.classList.remove('active');
+        if (voiceMeterFill) voiceMeterFill.style.width = '0%';
+        if (detectorScreen) detectorScreen.classList.remove('listening');
+    }
+
+    function getVoiceLevel() {
+        if (!analyser) return 0;
+        const data = new Uint8Array(analyser.fftSize);
+        analyser.getByteTimeDomainData(data);
+
+        let sumSquares = 0;
+        for (let i = 0; i < data.length; i++) {
+            const sample = (data[i] - 128) / 128;
+            sumSquares += sample * sample;
+        }
+        return Math.sqrt(sumSquares / data.length);
+    }
+
+    function updateVoiceMeter() {
+        const level = getVoiceLevel();
+        const percent = Math.min(100, Math.round(level * 450));
+        if (voiceMeterFill) voiceMeterFill.style.width = `${percent}%`;
+        meterRaf = requestAnimationFrame(updateVoiceMeter);
+    }
+
+    async function startMicrophone() {
+        if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+            throw new Error('Microphone not supported in this browser.');
+        }
+
+        await ensureAudioContext();
+
+        micStream = await navigator.mediaDevices.getUserMedia({
+            audio: {
+                echoCancellation: true,
+                noiseSuppression: true,
+                autoGainControl: true
+            },
+            video: false
+        });
+
+        const source = audioContext.createMediaStreamSource(micStream);
+        analyser = audioContext.createAnalyser();
+        analyser.fftSize = 2048;
+        analyser.smoothingTimeConstant = 0.8;
+        source.connect(analyser);
+
+        if (voiceMeter) voiceMeter.classList.add('active');
+        if (detectorScreen) detectorScreen.classList.add('listening');
+        updateVoiceMeter();
+    }
+
+    function analyzeVoiceSample(samples) {
+        if (!samples.length) {
+            return { kind: 'weak', score: 0 };
+        }
+
+        const avg = samples.reduce((a, b) => a + b, 0) / samples.length;
+        const peak = Math.max(...samples);
+        const variance = samples.reduce((sum, value) => sum + Math.pow(value - avg, 2), 0) / samples.length;
+        const spokenFrames = samples.filter((value) => value > 0.02).length;
+        const speechRatio = spokenFrames / samples.length;
+
+        // Too quiet / almost no speech
+        if (avg < 0.015 || speechRatio < 0.12 || peak < 0.03) {
+            return { kind: 'weak', score: avg };
+        }
+
+        // Fun voice "tell" score: shaky or very loud bursts lean lie; steady speech leans truth
+        let lieScore = 0;
+        lieScore += Math.min(variance * 800, 0.45);
+        if (peak > 0.22) lieScore += 0.2;
+        if (avg > 0.12) lieScore += 0.1;
+        if (speechRatio > 0.35 && variance < 0.0025) lieScore -= 0.25;
+        if (avg > 0.03 && avg < 0.09 && variance < 0.003) lieScore -= 0.2;
+
+        // Small wobble so repeats aren't identical, but still driven by mic
+        lieScore += (Math.random() - 0.5) * 0.18;
+
+        if (lieScore > 0.28) return { kind: 'lie', score: lieScore };
+        if (lieScore < -0.05) return { kind: 'truth', score: lieScore };
+        if (Math.abs(lieScore) < 0.08 && speechRatio < 0.28) return { kind: 'inconclusive', score: lieScore };
+        return lieScore >= 0.1 ? { kind: 'lie', score: lieScore } : { kind: 'truth', score: lieScore };
+    }
+
+    function pickResult(analysis) {
+        if (analysis.kind === 'weak') return weakResult;
+        if (analysis.kind === 'inconclusive') return inconclusiveResult;
+        if (analysis.kind === 'lie') {
+            return lieResults[Math.floor(Math.random() * lieResults.length)];
+        }
+        return truthResults[Math.floor(Math.random() * truthResults.length)];
+    }
+
+    function showResult(result) {
+        detectorDisplay.textContent = result.text;
+        detectorDisplay.style.color = result.color;
+        detectorNeedle.style.transform = `rotate(${result.needle})`;
+        detectorStatus.textContent = `Status: Detection #${detectionCount} complete (mic scan)`;
+        playResultSound(result);
+        createColorfulBurst(detectBtn);
+    }
+
+    function resetButton() {
+        detectBtn.textContent = 'Start Detection';
+        detectBtn.disabled = false;
+        isDetecting = false;
+    }
+
+    if (soundToggle) {
+        soundToggle.addEventListener('click', function () {
+            soundEnabled = !soundEnabled;
+            this.textContent = soundEnabled ? '🔊 Sound On' : '🔇 Sound Off';
+            this.style.background = soundEnabled
+                ? 'linear-gradient(135deg, rgba(255, 107, 107, 0.2), rgba(72, 219, 251, 0.2), rgba(255, 159, 243, 0.2))'
+                : 'linear-gradient(135deg, rgba(107, 114, 128, 0.2), rgba(75, 85, 99, 0.2))';
+        });
+    }
+
+    if (volumeSlider) {
+        volumeSlider.addEventListener('input', function () {
+            volume = this.value / 100;
+        });
+    }
+
+    detectBtn.addEventListener('click', async function () {
+        if (isDetecting) return;
         isDetecting = true;
         detectionCount++;
-        
-        // Play startup sound
-        playStartupSound();
-        
-        // Update button and status
-        this.textContent = 'Detecting...';
+
+        this.textContent = 'Listening...';
         this.disabled = true;
-        detectorStatus.textContent = 'Status: Analyzing';
-        
-        // Show processing
-        detectorDisplay.textContent = 'Processing...';
-        detectorDisplay.style.color = '#6366f1';
+        detectorDisplay.textContent = 'Speak your answer...';
+        detectorDisplay.style.color = '#48dbfb';
         detectorNeedle.style.transform = 'rotate(0deg)';
-        
-        // Play processing sound
-        playSound('processing');
-        
-        // Simulate detection process
-        setTimeout(() => {
-            const result = responses[Math.floor(Math.random() * responses.length)];
-            
-            detectorDisplay.textContent = result.text;
-            detectorDisplay.style.color = result.color;
-            detectorNeedle.style.transform = `rotate(${result.needle})`;
-            detectorStatus.textContent = `Status: Detection #${detectionCount} Complete`;
-            
-            // Play result sound
-            playResultSound(result);
-            
-            // Add colorful burst effect
-            createColorfulBurst(this);
-            
-            // Reset button
-            setTimeout(() => {
-                this.textContent = 'Start Detection';
-                this.disabled = false;
-                isDetecting = false;
-            }, 2000);
-            
-        }, 1500 + Math.random() * 1000);
+        detectorStatus.textContent = 'Status: Requesting microphone...';
+
+        try {
+            await startMicrophone();
+            playStartupSound();
+            detectorStatus.textContent = 'Status: Listening — answer now!';
+
+            const samples = [];
+            const listenMs = 3200;
+            const sampleEvery = 50;
+            const startedAt = performance.now();
+
+            await new Promise((resolve) => {
+                const sampleTimer = setInterval(() => {
+                    samples.push(getVoiceLevel());
+                    const elapsed = performance.now() - startedAt;
+                    const left = Math.max(0, Math.ceil((listenMs - elapsed) / 1000));
+                    detectorDisplay.textContent = `Listening... ${left || 1}`;
+                    detectorNeedle.style.transform = `rotate(${Math.min(180, elapsed / listenMs * 90)}deg)`;
+
+                    if (elapsed >= listenMs) {
+                        clearInterval(sampleTimer);
+                        resolve();
+                    }
+                }, sampleEvery);
+            });
+
+            detectorDisplay.textContent = 'Analyzing voice...';
+            detectorDisplay.style.color = '#6366f1';
+            detectorStatus.textContent = 'Status: Scanning voice patterns...';
+            createBeepSound(800, 0.1, 'sine');
+
+            await new Promise((resolve) => setTimeout(resolve, 700));
+
+            const analysis = analyzeVoiceSample(samples);
+            stopMic();
+            showResult(pickResult(analysis));
+
+            setTimeout(resetButton, 2200);
+        } catch (error) {
+            stopMic();
+            detectorDisplay.textContent = 'Mic blocked';
+            detectorDisplay.style.color = '#ef4444';
+            detectorNeedle.style.transform = 'rotate(180deg)';
+            detectorStatus.textContent = 'Status: Allow microphone access, then try again';
+            console.warn('Lie detector mic error:', error);
+            setTimeout(resetButton, 2500);
+        }
     });
 }
 

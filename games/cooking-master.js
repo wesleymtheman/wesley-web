@@ -32,6 +32,7 @@ class CookingMaster {
             spinach: { name: 'Spinach', icon: '🥬', cookTime: 1 },
             cheese: { name: 'Cheese', icon: '🧀', cookTime: 1 },
             bacon: { name: 'Bacon', icon: '🥓', cookTime: 3 },
+            eggs: { name: 'Eggs', icon: '🥚', cookTime: 2 },
             chicken: { name: 'Chicken', icon: '🍗', cookTime: 6 },
             fish: { name: 'Fish', icon: '🐟', cookTime: 4 },
             rice: { name: 'Rice', icon: '🍚', cookTime: 3 },
@@ -154,39 +155,31 @@ class CookingMaster {
     }
     
     bindEvents() {
-        // Start button
-        document.getElementById('startBtn').addEventListener('click', () => {
-            this.startGame();
-        });
-        
-        // Reset button
+        const startBtn = document.getElementById('startBtn');
+        startBtn.addEventListener('click', () => this.handleStartButton());
+
         document.getElementById('resetBtn').addEventListener('click', () => {
             this.resetGame();
         });
-        
-        // Back button
+
         document.getElementById('backBtn').addEventListener('click', () => {
             window.location.href = 'index.html';
         });
-        
-        // Instructions button
+
         document.getElementById('instructionsBtn').addEventListener('click', () => {
             this.showInstructions();
         });
-        
-        // Close instructions
+
         document.getElementById('closeInstructions').addEventListener('click', () => {
             this.hideInstructions();
         });
-        
-        // Close instructions on modal background click
+
         document.getElementById('instructionsModal').addEventListener('click', (e) => {
             if (e.target === e.currentTarget) {
                 this.hideInstructions();
             }
         });
-        
-        // Ingredient clicks
+
         document.querySelectorAll('.ingredient-item').forEach(item => {
             item.addEventListener('click', (e) => {
                 if (this.gameState === 'playing') {
@@ -194,52 +187,61 @@ class CookingMaster {
                 }
             });
         });
-        
-        // Pan click to serve
+
         document.getElementById('pan').addEventListener('click', () => {
             if (this.gameState === 'playing' && this.panIngredients.length > 0) {
                 this.serveDish();
             }
         });
-        
-        // Keyboard shortcuts
+
         document.addEventListener('keydown', (e) => {
-            if (this.gameState === 'playing') {
-                switch(e.key) {
-                    case '1': this.addIngredientToPan('carrot'); break;
-                    case '2': this.addIngredientToPan('potato'); break;
-                    case '3': this.addIngredientToPan('onion'); break;
-                    case '4': this.addIngredientToPan('tomato'); break;
-                    case '5': this.addIngredientToPan('mushroom'); break;
-                    case '6': this.addIngredientToPan('pepper'); break;
-                    case '7': this.addIngredientToPan('broccoli'); break;
-                    case '8': this.addIngredientToPan('corn'); break;
-                    case '9': this.addIngredientToPan('garlic'); break;
-                    case '0': this.addIngredientToPan('spinach'); break;
-                    case 'q': this.addIngredientToPan('cheese'); break;
-                    case 'w': this.addIngredientToPan('bacon'); break;
-                    case 'e': this.addIngredientToPan('chicken'); break;
-                    case 'r': this.addIngredientToPan('fish'); break;
-                    case 't': this.addIngredientToPan('rice'); break;
-                    case 'y': this.addIngredientToPan('pasta'); break;
-                    case ' ': 
-                        e.preventDefault();
-                        this.serveDish();
-                        break;
-                }
+            if (this.gameState !== 'playing') return;
+            const keyMap = {
+                '1': 'carrot', '2': 'potato', '3': 'onion', '4': 'tomato',
+                '5': 'mushroom', '6': 'pepper', '7': 'broccoli', '8': 'corn',
+                '9': 'garlic', '0': 'spinach', 'q': 'cheese', 'w': 'bacon',
+                'e': 'eggs', 'r': 'chicken', 't': 'fish', 'y': 'rice', 'u': 'pasta'
+            };
+            if (e.key === ' ') {
+                e.preventDefault();
+                this.serveDish();
+                return;
             }
+            const ingredient = keyMap[e.key.toLowerCase()];
+            if (ingredient) this.addIngredientToPan(ingredient);
         });
+    }
+
+    handleStartButton() {
+        if (this.gameState === 'waiting' || this.gameState === 'finished') {
+            if (this.gameState === 'finished') this.resetGame();
+            this.startGame();
+        } else if (this.gameState === 'playing') {
+            this.pauseGame();
+        } else if (this.gameState === 'paused') {
+            this.resumeGame();
+        }
     }
     
     generateRecipe() {
-        // Filter recipes based on difficulty and level
-        let availableRecipes = this.recipes.filter(recipe => {
+        // Only use recipes whose ingredients all exist
+        let availableRecipes = this.recipes.filter(recipe =>
+            recipe.ingredients.every(ing => this.ingredients[ing])
+        );
+
+        availableRecipes = availableRecipes.filter(recipe => {
             if (this.level <= 3) return recipe.difficulty === 'easy';
             if (this.level <= 6) return ['easy', 'normal'].includes(recipe.difficulty);
             if (this.level <= 10) return ['easy', 'normal', 'hard'].includes(recipe.difficulty);
-            return true; // Master level - all recipes
+            return true;
         });
-        
+
+        if (availableRecipes.length === 0) {
+            availableRecipes = this.recipes.filter(recipe =>
+                recipe.ingredients.every(ing => this.ingredients[ing])
+            );
+        }
+
         const recipe = availableRecipes[Math.floor(Math.random() * availableRecipes.length)];
         this.currentRecipe = recipe.ingredients.map(ing => ({
             ingredient: ing,
@@ -252,9 +254,13 @@ class CookingMaster {
     
     updateRecipeDisplay() {
         const recipeDisplay = document.getElementById('recipeDisplay');
+        if (!recipeDisplay) return;
         recipeDisplay.innerHTML = '';
         
         this.currentRecipe.forEach((item, index) => {
+            const ingredient = this.ingredients[item.ingredient];
+            if (!ingredient) return;
+
             const recipeItem = document.createElement('div');
             recipeItem.className = 'recipe-item';
             
@@ -264,7 +270,6 @@ class CookingMaster {
                 recipeItem.classList.add('current');
             }
             
-            const ingredient = this.ingredients[item.ingredient];
             recipeItem.innerHTML = `
                 <span class="ingredient">${ingredient.icon} ${ingredient.name}</span>
                 <span class="timer">${ingredient.cookTime}s</span>
@@ -275,41 +280,41 @@ class CookingMaster {
     }
     
     startGame() {
-        if (this.gameState === 'waiting') {
-            this.gameState = 'playing';
-            this.timeLeft = Math.max(30, 60 - (this.level * 3)); // Less time per level
-            this.mistakes = 0;
-            this.combo = 0;
-            this.streak = 0;
-            this.startTimer();
-            this.showMessage(`Level ${this.level} Started! Time: ${this.timeLeft}s ⏰`, 'info');
-            document.getElementById('startBtn').textContent = 'Pause';
-            document.getElementById('startBtn').onclick = () => this.pauseGame();
-        }
+        if (this.gameState !== 'waiting') return;
+
+        this.gameState = 'playing';
+        this.timeLeft = Math.max(30, 60 - (this.level * 3));
+        this.mistakes = 0;
+        this.combo = 0;
+        this.streak = 0;
+        this.startTimer();
+        this.showMessage(`Level ${this.level} Started! Time: ${this.timeLeft}s ⏰`, 'info');
+        document.getElementById('startBtn').textContent = 'Pause';
     }
     
     pauseGame() {
-        if (this.gameState === 'playing') {
-            this.gameState = 'paused';
-            clearInterval(this.gameTimer);
-            this.showMessage('Game Paused', 'info');
-            document.getElementById('startBtn').textContent = 'Resume';
-            document.getElementById('startBtn').onclick = () => this.resumeGame();
-        }
+        if (this.gameState !== 'playing') return;
+
+        this.gameState = 'paused';
+        clearInterval(this.gameTimer);
+        this.gameTimer = null;
+        this.showMessage('Game Paused', 'info');
+        document.getElementById('startBtn').textContent = 'Resume';
     }
     
     resumeGame() {
-        if (this.gameState === 'paused') {
-            this.gameState = 'playing';
-            this.startTimer();
-            this.showMessage('Game Resumed!', 'info');
-            document.getElementById('startBtn').textContent = 'Pause';
-            document.getElementById('startBtn').onclick = () => this.pauseGame();
-        }
+        if (this.gameState !== 'paused') return;
+
+        this.gameState = 'playing';
+        this.startTimer();
+        this.showMessage('Game Resumed!', 'info');
+        document.getElementById('startBtn').textContent = 'Pause';
     }
     
     startTimer() {
+        clearInterval(this.gameTimer);
         this.gameTimer = setInterval(() => {
+            if (this.gameState !== 'playing') return;
             this.timeLeft--;
             this.updateDisplay();
             
@@ -320,8 +325,17 @@ class CookingMaster {
     }
     
     addIngredientToPan(ingredientType) {
+        if (this.gameState !== 'playing') return;
+        if (!this.ingredients[ingredientType]) return;
+
         if (this.currentStep >= this.currentRecipe.length) {
             this.showMessage('Recipe complete! Serve the dish! 🍽️', 'info');
+            return;
+        }
+
+        // Don't add the same step twice while it's already cooking
+        if (this.currentRecipe[this.currentStep].cooking) {
+            this.showMessage('Still cooking — wait a sec! ⏳', 'info');
             return;
         }
         
@@ -470,40 +484,41 @@ class CookingMaster {
     endGame() {
         this.gameState = 'finished';
         clearInterval(this.gameTimer);
+        this.gameTimer = null;
         
         this.cookingTimers.forEach(timer => clearTimeout(timer));
         this.cookingTimers.clear();
         
         const finalScore = this.score;
-        const message = `Game Over! Final Score: ${finalScore} 🏆`;
-        this.showMessage(message, 'info');
+        this.showMessage(`Game Over! Final Score: ${finalScore} 🏆`, 'info');
         
         document.getElementById('startBtn').textContent = 'Play Again';
-        document.getElementById('startBtn').onclick = () => this.resetGame();
-        
-        // Save high score
         this.saveHighScore(finalScore);
     }
     
     resetGame() {
+        clearInterval(this.gameTimer);
+        this.gameTimer = null;
+        this.cookingTimers.forEach(timer => clearTimeout(timer));
+        this.cookingTimers.clear();
+
         this.gameState = 'waiting';
         this.score = 0;
         this.level = 1;
         this.timeLeft = 60;
         this.currentStep = 0;
         this.panIngredients = [];
-        
-        clearInterval(this.gameTimer);
-        this.cookingTimers.forEach(timer => clearTimeout(timer));
-        this.cookingTimers.clear();
+        this.mistakes = 0;
+        this.combo = 0;
+        this.streak = 0;
+        this.perfectDishes = 0;
+        this.maxMistakes = 3;
         
         this.clearPan();
         this.generateRecipe();
         this.updateDisplay();
         
         document.getElementById('startBtn').textContent = 'Start Cooking';
-        document.getElementById('startBtn').onclick = () => this.startGame();
-        
         this.showMessage('Game Reset! Ready to cook? 🍳', 'info');
     }
     
@@ -514,13 +529,17 @@ class CookingMaster {
         document.getElementById('mistakes').textContent = `${this.mistakes}/${this.maxMistakes}`;
         document.getElementById('combo').textContent = this.combo;
         
-        // Update progress
-        const progress = (this.currentStep / this.currentRecipe.length) * 100;
+        const len = this.currentRecipe.length || 1;
+        const progress = (this.currentStep / len) * 100;
         document.getElementById('progressFill').style.width = `${progress}%`;
         
         if (this.currentStep < this.currentRecipe.length) {
             const nextIngredient = this.ingredients[this.currentRecipe[this.currentStep].ingredient];
-            document.getElementById('progressText').textContent = `Next: ${nextIngredient.icon} ${nextIngredient.name}`;
+            if (nextIngredient) {
+                document.getElementById('progressText').textContent = `Next: ${nextIngredient.icon} ${nextIngredient.name}`;
+            } else {
+                document.getElementById('progressText').textContent = 'Next ingredient...';
+            }
         } else {
             document.getElementById('progressText').textContent = 'Ready to serve! Click the pan!';
         }

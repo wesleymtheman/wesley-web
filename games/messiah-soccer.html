@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Messiah Soccer - WesleyDude.com">
+    <title>Messiah Soccer - WesleyDude.com</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="game-shell.css">
+    <link rel="stylesheet" href="mini-games.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        .soccer-wrap {
+            width: min(560px, 100%);
+            margin: 0 auto;
+            border-radius: 14px;
+            overflow: hidden;
+            border: 3px solid #1b5e20;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+        }
+        .soccer-wrap canvas {
+            display: block;
+            width: 100%;
+            height: auto;
+            background: #2e7d32;
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <nav class="nav">
+            <div class="nav-brand"><h1><a href="../index.html">WesleyDude.com</a></h1></div>
+            <ul class="nav-links">
+                <li><a href="../index.html">Home</a></li>
+                <li><a href="../index.html#about">About</a></li>
+                <li><a href="index.html" class="active">Games</a></li>
+            </ul>
+            <button class="nav-toggle" aria-label="Toggle navigation"><span></span><span></span><span></span></button>
+        </nav>
+    </header>
+    <main class="game-main">
+        <div class="game-container">
+            <div class="game-header">
+                <div class="game-title">
+                    <h1>⚽ Messiah Soccer</h1>
+                    <p>Play as Messiah vs 3 rivals — kick the ball (no picking up!)</p>
+                </div>
+                <div class="game-stats">
+                    <div class="stat"><span class="stat-label">Messiah</span><span class="stat-value" id="score">0</span></div>
+                    <div class="stat"><span class="stat-label">Them</span><span class="stat-value" id="oppScore">0</span></div>
+                    <div class="stat"><span class="stat-label">Best</span><span class="stat-value" id="best">0</span></div>
+                    <div class="stat"><span class="stat-label">Time</span><span class="stat-value" id="time">60</span></div>
+                </div>
+            </div>
+            <div class="mini-play" id="playArea">
+                <div class="soccer-wrap">
+                    <canvas id="gameCanvas" width="560" height="320"></canvas>
+                </div>
+                <p class="status" id="status">Press Start. WASD / arrows to move. Space kicks the ball only!</p>
+            </div>
+            <div class="game-controls">
+                <button class="btn btn-primary" id="actionBtn" type="button">Start</button>
+                <button class="btn btn-outline" id="backBtn" type="button">Back to Games</button>
+            </div>
+            <div class="game-messages" id="gameMessages"></div>
+        </div>
+    </main>
+    <footer class="footer"><div class="container"><p>&copy; 2026 WesleyDude.com. Built with ❤️ by Wesley.</p></div></footer>
+    <script src="../script.js"></script>
+    <script src="messiah-soccer.js"></script>
+</body>
+</html>
