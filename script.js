@@ -3,61 +3,12 @@
 
 document.addEventListener('DOMContentLoaded', function() {
     // Initialize all functionality
-    initBirthdayBanner();
     initNavigation();
     initHeroAnimations();
     initLieDetector();
     initScrollAnimations();
     initMobileMenu();
 });
-
-function nextWesleyBirthday(from = new Date()) {
-    const year = from.getFullYear();
-    let next = new Date(year, 4, 29); // May 29
-    // After May 29, count down to next year's birthday
-    const startOfToday = new Date(year, from.getMonth(), from.getDate());
-    if (startOfToday > next) next = new Date(year + 1, 4, 29);
-    return next;
-}
-
-function daysUntilWesleyBirthday(from = new Date()) {
-    const today = new Date(from.getFullYear(), from.getMonth(), from.getDate());
-    const next = nextWesleyBirthday(from);
-    return Math.round((next - today) / 86400000);
-}
-
-// Every May 29 — Happy Birthday Wesley! Otherwise show days until May 29.
-function initBirthdayBanner() {
-    if (document.getElementById('birthdayBanner')) return;
-
-    const now = new Date();
-    const isBirthday = now.getMonth() === 4 && now.getDate() === 29;
-    const days = daysUntilWesleyBirthday(now);
-
-    const banner = document.createElement('div');
-    banner.id = 'birthdayBanner';
-    banner.className = 'birthday-banner' + (isBirthday ? '' : ' birthday-countdown');
-    banner.setAttribute('role', 'status');
-
-    if (isBirthday) {
-        banner.innerHTML = `
-            <span class="birthday-banner-sparkle" aria-hidden="true">🎂</span>
-            <span class="birthday-banner-text">Happy Birthday Wesley!</span>
-            <span class="birthday-banner-sparkle" aria-hidden="true">🎉</span>
-        `;
-        document.body.classList.add('birthday-today');
-    } else {
-        const dayWord = days === 1 ? 'day' : 'days';
-        banner.innerHTML = `
-            <span class="birthday-banner-sparkle" aria-hidden="true">🎂</span>
-            <span class="birthday-banner-text">${days} ${dayWord} until May 29 — Wesley’s birthday!</span>
-            <span class="birthday-banner-sparkle" aria-hidden="true">🎈</span>
-        `;
-        document.body.classList.add('birthday-countdown-on');
-    }
-
-    document.body.insertBefore(banner, document.body.firstChild);
-}
 
 // Navigation functionality
 function initNavigation() {
