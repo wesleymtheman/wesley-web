@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Times Tables - WesleyDude.com">
+    <title>Times Tables - WesleyDude.com</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="game-shell.css">
+    <link rel="stylesheet" href="mini-games.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header class="header">
+        <nav class="nav">
+            <div class="nav-brand"><h1><a href="../index.html">WesleyDude.com</a></h1></div>
+            <ul class="nav-links">
+                <li><a href="../index.html">Home</a></li>
+                <li><a href="../index.html#about">About</a></li>
+                <li><a href="index.html">Games</a></li>
+                <li><a href="educational.html" class="active">Educational</a></li>
+            </ul>
+            <button class="nav-toggle" aria-label="Toggle navigation"><span></span><span></span><span></span></button>
+        </nav>
+    </header>
+    <main class="game-main">
+        <div class="game-container">
+            <div class="game-header">
+                <div class="game-title">
+                    <h1>✖️ Times Tables</h1>
+                    <p>Practice multiplication facts fast.</p>
+                </div>
+                <div class="game-stats">
+                    <div class="stat"><span class="stat-label">Score</span><span class="stat-value" id="score">0</span></div>
+                    <div class="stat"><span class="stat-label">Best</span><span class="stat-value" id="best">0</span></div>
+                    <div class="stat"><span class="stat-label">Grade</span><span class="stat-value" id="gradeLabel">-</span></div>
+                </div>
+            </div>
+            <div class="mini-play" id="playArea">
+                <label class="grade-label" for="gradeSelect">What grade are you in?</label>
+                <select id="gradeSelect" class="grade-select" aria-label="What grade are you in?">
+                    <option value="">Pick your grade</option>
+                    <option value="K">Kindergarten</option>
+                    <option value="1">1st Grade</option>
+                    <option value="2">2nd Grade</option>
+                    <option value="3">3rd Grade</option>
+                    <option value="4">4th Grade</option>
+                    <option value="5">5th Grade</option>
+                </select>
+                <div class="big" id="display" style="font-size:2rem">2 × 3 = ?</div>
+                <p class="status" id="status">Type the product and Check.</p>
+                <input type="number" id="answerInput" placeholder="Answer">
+                <button class="btn btn-secondary" id="submitBtn" type="button">Check</button>
+</div>
+            <div class="game-controls">
+                <button class="btn btn-primary" id="actionBtn" type="button">New Fact</button>
+                <button class="btn btn-outline" id="backBtn" type="button">Back to Educational</button>
+            </div>
+            <div class="game-messages" id="gameMessages"></div>
+        </div>
+    </main>
+    <footer class="footer"><div class="container"><p>&copy; 2026 WesleyDude.com. Built with ❤️ by Wesley.</p></div></footer>
+        <script src="../script.js"></script>
+    <script src="grade-utils.js"></script>
+    <script src="times-tables.js"></script>
+</body>
+</html>

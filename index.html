@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="WesleyDude.com - A website built by Wesley to do cool stuff">
     <title>WesleyDude.com - Cool Stuff by Wesley</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="styles.css?v=7">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -21,6 +21,8 @@
                 <li><a href="#about">About</a></li>
                 <li><a href="#lie-detector">Lie Detector</a></li>
                 <li><a href="games/index.html">Games</a></li>
+                <li><a href="games/educational.html">Educational</a></li>
+                <li><a href="question.html">?</a></li>
             </ul>
             <button class="nav-toggle" aria-label="Toggle navigation">
                 <span></span>
@@ -51,7 +53,9 @@
                     <span>⚡</span>
                 </div>
             </div>
-            <div class="laser-beams"></div>
+            <div class="home-kitty" aria-hidden="true">
+                <img src="realistic-kitty.jpg" alt="" class="home-kitty-img">
+            </div>
             <div class="space-planets"></div>
             <div class="asteroids"></div>
         </section>
@@ -77,13 +81,19 @@
                 <h2>Lie Detector</h2>
                 <div class="lie-detector-content">
                     <div class="lie-detector-text">
-                        <p>Test your honesty with Wesley's interactive lie detector! Ask yourself a question and see if you're telling the truth.</p>
-                        <p>Click the detector to start your truth-telling journey!</p>
+                        <p>Test your honesty with Wesley's interactive lie detector! Ask a question out loud, then answer into your microphone.</p>
+                        <p>Allow mic access, speak your answer, and the machine will scan your voice for the truth!</p>
                     </div>
                     <div class="lie-detector-machine">
                         <div class="detector-screen">
                             <div class="detector-display" id="detectorDisplay">Ready to Detect</div>
                             <div class="detector-needle" id="detectorNeedle"></div>
+                            <div class="voice-meter" id="voiceMeter" aria-hidden="true">
+                                <div class="voice-meter-label">Mic Level</div>
+                                <div class="voice-meter-track">
+                                    <div class="voice-meter-fill" id="voiceMeterFill"></div>
+                                </div>
+                            </div>
                         </div>
                         <div class="detector-controls">
                             <button class="btn btn-primary" id="detectBtn">Start Detection</button>
@@ -94,7 +104,7 @@
                                     <input type="range" id="volumeSlider" min="0" max="100" value="50" class="volume-slider">
                                 </div>
                             </div>
-                            <div class="detector-status" id="detectorStatus">Status: Idle</div>
+                            <div class="detector-status" id="detectorStatus">Status: Idle — mic ready when you start</div>
                         </div>
                     </div>
                 </div>
@@ -109,6 +119,6 @@
         </div>
     </footer>
 
-    <script src="script.js"></script>
+    <script src="script.js?v=4"></script>
 </body>
 </html>

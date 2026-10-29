@@ -19,8 +19,10 @@
             </div>
             <ul class="nav-links">
                 <li><a href="../index.html">Home</a></li>
-                <li><a href="../index.html#lie-detector">Lie Detector</a></li>
+                <li><a href="../index.html#about">About</a></li>
                 <li><a href="index.html" class="active">Games</a></li>
+                <li><a href="educational.html">Educational</a></li>
+                <li><a href="../question.html">?</a></li>
             </ul>
             <button class="nav-toggle" aria-label="Toggle navigation">
                 <span></span>
@@ -36,104 +38,48 @@
                 <div class="games-hero-content">
                     <h1 class="games-title">Wesley's Games</h1>
                     <p class="games-subtitle">Pick a game, or hit random and see what you get.</p>
+                    <p class="games-daily">Games are going to be made daily!</p>
                     <button class="btn btn-primary" id="randomGameBtn" type="button">Play a Random Game</button>
+                    <p class="games-edu-link"><a href="educational.html">Looking to learn? Try Educational Games →</a></p>
+                    <p class="games-edu-link"><a href="#game-requests">Got an idea? Request a game →</a></p>
                 </div>
             </div>
         </section>
 
         <section class="games-grid">
             <div class="container">
-                <div class="games-container">
-                    <article class="game-card" data-game="shop-master">
-                        <div class="game-preview"><div class="game-icon">🏪</div></div>
-                        <div class="game-info">
-                            <h3>Shop Master</h3>
-                            <p>Manage inventory, serve customers, and grow your shop.</p>
-                            <div class="game-stats">
-                                <span class="difficulty">Medium</span>
-                                <span class="category">Management</span>
-                            </div>
-                            <a href="shop-master.html" class="btn btn-primary play-btn">Play</a>
-                        </div>
-                    </article>
+                <div class="games-container" id="gamesContainer">
+                    <!-- filled by games.js catalog for easier upkeep -->
+                </div>
+            </div>
+        </section>
 
-                    <article class="game-card" data-game="cooking-master">
-                        <div class="game-preview"><div class="game-icon">🍳</div></div>
-                        <div class="game-info">
-                            <h3>Cooking Master</h3>
-                            <p>Follow recipes and time your ingredients just right.</p>
-                            <div class="game-stats">
-                                <span class="difficulty">Easy</span>
-                                <span class="category">Cooking</span>
-                            </div>
-                            <a href="cooking-master.html" class="btn btn-primary play-btn">Play</a>
-                        </div>
-                    </article>
+        <section class="game-requests" id="game-requests">
+            <div class="container">
+                <div class="game-requests-header">
+                    <h2>Game Requests</h2>
+                    <p>Want a new game on WesleyDude.com? Send an idea and Wesley might build it next!</p>
+                </div>
+                <div class="game-requests-layout">
+                    <form class="game-request-form" id="gameRequestForm">
+                        <label for="requestName">Your name <span class="optional">(optional)</span></label>
+                        <input type="text" id="requestName" name="name" maxlength="40" placeholder="Wesley" autocomplete="nickname">
 
-                    <article class="game-card" data-game="snake-master">
-                        <div class="game-preview"><div class="game-icon">🐍</div></div>
-                        <div class="game-info">
-                            <h3>Snake Master</h3>
-                            <p>Classic snake — eat, grow, and don't hit yourself.</p>
-                            <div class="game-stats">
-                                <span class="difficulty">Medium</span>
-                                <span class="category">Arcade</span>
-                            </div>
-                            <a href="snake-master.html" class="btn btn-primary play-btn">Play</a>
-                        </div>
-                    </article>
+                        <label for="requestTitle">Game idea</label>
+                        <input type="text" id="requestTitle" name="title" maxlength="60" placeholder="Space racing" required>
 
-                    <article class="game-card" data-game="ghost-hunt">
-                        <div class="game-preview"><div class="game-icon">👻</div></div>
-                        <div class="game-info">
-                            <h3>Ghost Hunt</h3>
-                            <p>Collect candy and dodge ghosts in the dark.</p>
-                            <div class="game-stats">
-                                <span class="difficulty">Medium</span>
-                                <span class="category">Spooky</span>
-                            </div>
-                            <a href="ghost-hunt.html" class="btn btn-primary play-btn">Play</a>
-                        </div>
-                    </article>
+                        <label for="requestDetails">What should it do?</label>
+                        <textarea id="requestDetails" name="details" maxlength="280" rows="3" placeholder="Race spaceships and dodge asteroids!" required></textarea>
 
-                    <article class="game-card" data-game="memory-match">
-                        <div class="game-preview"><div class="game-icon">🧠</div></div>
-                        <div class="game-info">
-                            <h3>Memory Match</h3>
-                            <p>Flip cards and find every pair in as few moves as you can.</p>
-                            <div class="game-stats">
-                                <span class="difficulty">Easy</span>
-                                <span class="category">Puzzle</span>
-                            </div>
-                            <a href="memory-match.html" class="btn btn-primary play-btn">Play</a>
-                        </div>
-                    </article>
-
-                    <article class="game-card" data-game="reaction-rush">
-                        <div class="game-preview"><div class="game-icon">⚡</div></div>
-                        <div class="game-info">
-                            <h3>Reaction Rush</h3>
-                            <p>Wait for green, then click as fast as you can.</p>
-                            <div class="game-stats">
-                                <span class="difficulty">Easy</span>
-                                <span class="category">Reflex</span>
-                            </div>
-                            <a href="reaction-rush.html" class="btn btn-primary play-btn">Play</a>
-                        </div>
-                    </article>
-
-                    <article class="game-card" data-game="mole-mash">
-                        <div class="game-preview"><div class="game-icon">🐹</div></div>
-                        <div class="game-info">
-                            <h3>Mole Mash</h3>
-                            <p>Whack moles before they hide — 30 seconds on the clock.</p>
-                            <div class="game-stats">
-                                <span class="difficulty">Easy</span>
-                                <span class="category">Arcade</span>
-                            </div>
-                            <a href="mole-mash.html" class="btn btn-primary play-btn">Play</a>
-                        </div>
-                    </article>
+                        <button type="submit" class="btn btn-primary">Send Request</button>
+                        <p class="game-request-feedback" id="requestFeedback" aria-live="polite"></p>
+                    </form>
+                    <div class="game-requests-list-wrap">
+                        <h3>Ideas so far</h3>
+                        <ul class="game-requests-list" id="gameRequestsList">
+                            <!-- filled by games.js -->
+                        </ul>
+                    </div>
                 </div>
             </div>
         </section>

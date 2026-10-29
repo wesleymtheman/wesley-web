@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="What's the Time, Mr. Clock? - WesleyDude.com">
+    <title>What's the Time, Mr. Clock? - WesleyDude.com</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="game-shell.css">
+    <link rel="stylesheet" href="mini-games.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header class="header">
+        <nav class="nav">
+            <div class="nav-brand"><h1><a href="../index.html">WesleyDude.com</a></h1></div>
+            <ul class="nav-links">
+                <li><a href="../index.html">Home</a></li>
+                <li><a href="../index.html#about">About</a></li>
+                <li><a href="index.html" class="active">Games</a></li>
+                <li><a href="educational.html">Educational</a></li>
+            </ul>
+            <button class="nav-toggle" aria-label="Toggle navigation"><span></span><span></span><span></span></button>
+        </nav>
+    </header>
+    <main class="game-main">
+        <div class="game-container">
+            <div class="game-header">
+                <div class="game-title">
+                    <h1>🕐 What's the Time, Mr. Clock?</h1>
+                    <p>Ask the time, take steps closer — run when it’s Midnight!</p>
+                </div>
+                <div class="game-stats">
+                    <div class="stat"><span class="stat-label">Steps</span><span class="stat-value" id="steps">0</span></div>
+                    <div class="stat"><span class="stat-label">Left</span><span class="stat-value" id="away">12</span></div>
+                    <div class="stat"><span class="stat-label">Rounds</span><span class="stat-value" id="rounds">0</span></div>
+                    <div class="stat"><span class="stat-label">Best</span><span class="stat-value" id="best">0</span></div>
+                </div>
+            </div>
+            <div class="mini-play clock-play" id="playArea">
+                <div class="clock-stage" id="stage">
+                    <div class="clock-face" id="clockFace" aria-hidden="true">
+                        <div class="clock-center"></div>
+                        <div class="clock-hand hour" id="hourHand"></div>
+                        <div class="clock-hand minute" id="minuteHand"></div>
+                        <div class="clock-num n12">12</div>
+                        <div class="clock-num n3">3</div>
+                        <div class="clock-num n6">6</div>
+                        <div class="clock-num n9">9</div>
+                    </div>
+                    <div class="clock-path" id="path"></div>
+                    <div class="clock-player" id="player">🧒</div>
+                </div>
+                <p class="clock-speech" id="speech">Mr. Clock is waiting…</p>
+                <p class="status" id="status">Press Start, then ask Mr. Clock the time!</p>
+            </div>
+            <div class="game-controls">
+                <button class="btn btn-primary" id="actionBtn" type="button">Start</button>
+                <button class="btn btn-secondary" id="askBtn" type="button" disabled>What's the time?</button>
+                <button class="btn btn-outline" id="runBtn" type="button" disabled>RUN!</button>
+                <button class="btn btn-outline" id="backBtn" type="button">Back to Games</button>
+            </div>
+            <div class="game-messages" id="gameMessages"></div>
+        </div>
+    </main>
+    <footer class="footer"><div class="container"><p>&copy; 2026 WesleyDude.com. Built with ❤️ by Wesley.</p></div></footer>
+    <script src="../script.js"></script>
+    <script src="whats-the-time.js"></script>
+</body>
+</html>

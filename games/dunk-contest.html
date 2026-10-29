@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Dunk Contest - WesleyDude.com">
+    <title>Dunk Contest - WesleyDude.com</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="game-shell.css">
+    <link rel="stylesheet" href="mini-games.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header class="header">
+        <nav class="nav">
+            <div class="nav-brand"><h1><a href="../index.html">WesleyDude.com</a></h1></div>
+            <ul class="nav-links">
+                <li><a href="../index.html">Home</a></li>
+                <li><a href="../index.html#about">About</a></li>
+                <li><a href="index.html" class="active">Games</a></li>
+                <li><a href="educational.html">Educational</a></li>
+            </ul>
+            <button class="nav-toggle" aria-label="Toggle navigation"><span></span><span></span><span></span></button>
+        </nav>
+    </header>
+    <main class="game-main">
+        <div class="game-container">
+            <div class="game-header">
+                <div class="game-title">
+                    <h1>🏀 Dunk Contest</h1>
+                    <p>Two teams, one rim — dunk before the shot clock hits zero!</p>
+                </div>
+                <div class="game-stats">
+                    <div class="stat"><span class="stat-label">You</span><span class="stat-value" id="score">0</span></div>
+                    <div class="stat"><span class="stat-label">Rivals</span><span class="stat-value" id="rival">0</span></div>
+                    <div class="stat"><span class="stat-label">Best</span><span class="stat-value" id="best">0</span></div>
+                    <div class="stat"><span class="stat-label">Clock</span><span class="stat-value" id="clock">24</span></div>
+                </div>
+            </div>
+            <div class="mini-play" id="playArea">
+                <div class="dunk-court" id="court">
+                    <div class="dunk-hoop">🥅</div>
+                    <div class="dunk-meter">
+                        <div class="dunk-meter-fill" id="meterFill"></div>
+                        <div class="dunk-sweet" id="sweetSpot"></div>
+                    </div>
+                    <div class="dunk-ball" id="ball">🏀</div>
+                </div>
+                <p class="status" id="status">Start the contest — hit Dunk when the meter is in the green!</p>
+            </div>
+            <div class="game-controls">
+                <button class="btn btn-primary" id="actionBtn" type="button">Start Contest</button>
+                <button class="btn btn-secondary" id="dunkBtn" type="button" disabled>Dunk!</button>
+                <button class="btn btn-outline" id="backBtn" type="button">Back to Games</button>
+            </div>
+            <div class="game-messages" id="gameMessages"></div>
+        </div>
+    </main>
+    <footer class="footer"><div class="container"><p>&copy; 2026 WesleyDude.com. Built with ❤️ by Wesley.</p></div></footer>
+    <script src="../script.js"></script>
+    <script src="dunk-contest.js"></script>
+</body>
+</html>
